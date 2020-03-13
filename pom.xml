@@ -75,13 +75,6 @@
         </repository>
     </distributionManagement>
 
-    <developers>
-        <developer>
-            <name>Grzegorz Piwoware</name>
-            <email>gpiwowarek@gmail.com</email>
-        </developer>
-    </developers>
-
     <modules>
         <module>bom</module>
 

@@ -9,9 +9,6 @@ import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
 
-/**
- * @author Grzegorz Piwowarek
- */
 @ConfigRoot(name = "hazelcast-client", phase = ConfigPhase.RUN_TIME)
 public class HazelcastClientConfig {
 

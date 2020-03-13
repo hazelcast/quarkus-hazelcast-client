@@ -5,9 +5,6 @@ import com.hazelcast.logging.ILogger;
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
 
-/**
- * @author Grzegorz Piwowarek
- */
 @TargetClass(JCacheDetector.class)
 public final class Target_JCacheDetector {
 

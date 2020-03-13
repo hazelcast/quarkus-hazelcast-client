@@ -4,9 +4,6 @@ import java.net.InetSocketAddress;
 
 import com.hazelcast.client.config.ClientConfig;
 
-/**
- * @author Grzegorz Piwowarek
- */
 class HazelcastConfigurationParser {
 
     ClientConfig fromApplicationProperties(HazelcastClientConfig config, ClientConfig clientConfig) {

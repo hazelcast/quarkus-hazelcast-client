@@ -12,9 +12,6 @@ import com.hazelcast.core.HazelcastInstance;
 
 import io.quarkus.arc.DefaultBean;
 
-/**
- * @author Grzegorz Piwowarek
- */
 @ApplicationScoped
 public class HazelcastClientProducer {
     HazelcastClientConfig config;
