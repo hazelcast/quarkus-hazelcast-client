@@ -54,9 +54,6 @@ import io.quarkus.hazelcast.client.runtime.HazelcastClientBytecodeRecorder;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientConfig;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientProducer;
 
-/**
- * @author Grzegorz Piwowarek
- */
 class HazelcastClientProcessor {
 
     @BuildStep

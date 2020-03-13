@@ -8,9 +8,6 @@ import com.hazelcast.core.HazelcastInstance;
 
 import io.quarkus.test.common.QuarkusTestResourceLifecycleManager;
 
-/**
- * @author Grzegorz Piwowarek
- */
 public class HazelcastServerTestResource implements QuarkusTestResourceLifecycleManager {
 
     private volatile HazelcastInstance member;

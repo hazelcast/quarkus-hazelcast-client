@@ -3,9 +3,6 @@ package io.quarkus.hazelcast.client.runtime;
 import com.hazelcast.client.config.ClientConfig;
 import com.hazelcast.client.impl.clientside.FailoverClientConfigSupport;
 
-/**
- * @author Grzegorz Piwowarek
- */
 class HazelcastConfigurationResolver {
     private final HazelcastConfigurationParser parser = new HazelcastConfigurationParser();
 
