@@ -7,6 +7,9 @@ import com.hazelcast.nio.ObjectDataOutput;
 import com.hazelcast.nio.serialization.IdentifiedDataSerializable;
 
 public class IdentifiedDataSerializableWrapper implements IdentifiedDataSerializable {
+
+    static final int CLASS_ID = 42;
+
     private String value;
 
     public IdentifiedDataSerializableWrapper() {
@@ -36,11 +39,11 @@ public class IdentifiedDataSerializableWrapper implements IdentifiedDataSerializ
 
     @Override
     public int getFactoryId() {
-        return 42;
+        return IdentifiedDataSerializableWrapperFactory.FACTORY_ID;
     }
 
     @Override
     public int getClassId() {
-        return 42;
+        return CLASS_ID;
     }
 }

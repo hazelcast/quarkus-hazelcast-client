@@ -7,7 +7,7 @@ import com.hazelcast.nio.serialization.PortableReader;
 import com.hazelcast.nio.serialization.PortableWriter;
 
 public class PortableWrapper implements Portable {
-    final static int ID = 5;
+    final static int CLASS_ID = 5;
 
     private String value;
 
@@ -28,12 +28,12 @@ public class PortableWrapper implements Portable {
 
     @Override
     public int getFactoryId() {
-        return 1;
+        return PortableWrapperFactory.FACTORY_ID;
     }
 
     @Override
     public int getClassId() {
-        return ID;
+        return CLASS_ID;
     }
 
     @Override
