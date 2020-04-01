@@ -15,18 +15,18 @@ Hazelcast is:
 
 ## Configuration
 
- You can add the `hazelcast-client` extension to your Quarkus project by adding the following dependency:
+You can add the `hazelcast-client` extension to your Quarkus project by adding the following dependency:
 
-     <dependency>
-         <groupId>io.quarkus</groupId>
-         <artifactId>quarkus-hazelcast-client</artifactId>
-     </dependency>
+    <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-hazelcast-client</artifactId>
+    </dependency>
 ### Quarkus hazelcast-client configuration
 
 The extension exposes a single native-mode-compatible Hazelcast Client bean (`HazelcastInstance`) which can be directly injected into your beans:
 
-     @Inject
-     HazelcastInstance hazelcastClient;
+    @Inject
+    HazelcastInstance hazelcastClient;
 
 By default, client will try to connect to a Hazelcast instance running on the host using port 5701.
 
@@ -54,7 +54,7 @@ Configuration entries from `hazelcast-client.yml` override all `quarkus.hazelcas
 
 ## Testing
 
-To make testing simple, Quarkus provides the `HazelcastServerTestResource` which automatically launches an embedded Hazelcast instance with defaults settings and manages its lifecycle:
+To make testing simple, the extension provides the `HazelcastServerTestResource` which automatically launches an embedded Hazelcast instance with defaults settings and manages its lifecycle:
 
      @QuarkusTest
      @QuarkusTestResource(HazelcastServerTestResource.class)
