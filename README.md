@@ -13,7 +13,20 @@ Hazelcast is:
 ## Features
 - The HazelcastInstance bean is initialized lazily by Quarkus, if you want eager initialization, make sure to double-check [Quarkus Documentation](https://quarkus.io/guides/cdi-reference#eager-instantiation-of-beans). 
 
-## Quarkus hazelcast-client configuration
+## Configuration
+
+You can add the `hazelcast-client` extension to your Quarkus project by adding the following dependency:
+
+    <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-hazelcast-client</artifactId>
+    </dependency>
+### Quarkus hazelcast-client configuration
+
+The extension exposes a single native-mode-compatible Hazelcast Client bean (`HazelcastInstance`) which can be directly injected into your beans:
+
+    @Inject
+    HazelcastInstance hazelcastClient;
 
 By default, client will try to connect to a Hazelcast instance running on the host using port 5701.
 
@@ -29,6 +42,7 @@ Defaults can be customized using `application.properties` entries such as:
 All of them mirror standard Hazelcast Client configuration options.
 
 If you need more, use a standard `hazelcast-client.yml/hazelcast-client.xml`-based configuration (described below) or wire-up your own `HazelcastInstance` bean. 
+Keep in mind that you will still be able to benefit from GraalVM compatibility!
 
 ### Configuration Files
 
@@ -38,5 +52,28 @@ In order to configure the client using the `hazelcast-client.yml` file, place th
 
 Configuration entries from `hazelcast-client.yml` override all `quarkus.hazelcast-client.*` entries.
 
+## Testing
+
+To make testing simple, the extension provides the `HazelcastServerTestResource` which automatically launches an embedded Hazelcast instance with defaults settings and manages its lifecycle:
+
+     @QuarkusTest
+     @QuarkusTestResource(HazelcastServerTestResource.class)
+     public class HazelcastAwareTest {
+
+         @Test
+         public void test() {
+             // you can safely call embedded Hazelcast instance from here
+         }
+     }
+     
+#### Maven dependency:
+
+    <dependency>
+        <groupId>io.quarkus</groupId>
+        <artifactId>quarkus-test-hazelcast</artifactId>
+        <scope>test</scope>
+    </dependency>
+
 ## Limitations (native mode)
 - Default Java serialization is not supported
+- User code deployment is not supported
