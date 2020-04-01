@@ -21,7 +21,7 @@ Hazelcast is:
          <groupId>io.quarkus</groupId>
          <artifactId>quarkus-hazelcast-client</artifactId>
      </dependency>
-## #Quarkus hazelcast-client configuration
+### Quarkus hazelcast-client configuration
 
 The extension exposes a single native-mode-compatible Hazelcast Client bean (`HazelcastInstance`) which can be directly injected into your beans:
 
