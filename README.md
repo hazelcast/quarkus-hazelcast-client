@@ -1,8 +1,7 @@
 # Hazelcast Client for Quarkus
 
 <a href="https://github.com/actions/toolkit"><img alt="GitHub Actions status" src="https://github.com/hazelcast/quarkus-hazelcast-client/workflows/build/badge.svg"></a>
-
-[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hazelcast/quarkus-hazelcast-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.hazelcast/quarkus-hazelcast-client)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/com.hazelcast/quarkus-hazelcast-client/badge.svg)](https://maven-badges.herokuapp.com/maven-central/com.hazelcast/quarkus-hazelcast-client) 
 
 [Hazelcast IMDG](https://hazelcast.com/products/imdg/) is a distributed in-memory object store and compute engine that supports a wide variety of data structures such as Map, Set, List, MultiMap, RingBuffer, HyperLogLog. 
 
