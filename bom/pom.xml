@@ -18,7 +18,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.hazelcast.quarkus</groupId>
+        <groupId>com.hazelcast</groupId>
         <artifactId>quarkus-hazelcast-client-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
     </parent>
@@ -52,13 +52,13 @@
             <!-- Extension Module -->
 
             <dependency>
-                <groupId>com.hazelcast.quarkus</groupId>
+                <groupId>com.hazelcast</groupId>
                 <artifactId>quarkus-hazelcast-client</artifactId>
                 <version>${project.version}</version>
             </dependency>
 
             <dependency>
-                <groupId>com.hazelcast.quarkus</groupId>
+                <groupId>com.hazelcast</groupId>
                 <artifactId>quarkus-test-hazelcast</artifactId>
                 <version>${project.version}</version>
             </dependency>

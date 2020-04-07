@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <groupId>com.hazelcast.quarkus</groupId>
+        <groupId>com.hazelcast</groupId>
         <artifactId>quarkus-hazelcast-client-parent</artifactId>
         <version>0.0.1-SNAPSHOT</version>
         <relativePath>../</relativePath>
@@ -14,7 +14,7 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.hazelcast.quarkus</groupId>
+                <groupId>com.hazelcast</groupId>
                 <artifactId>quarkus-hazelcast-client-bom</artifactId>
                 <version>${project.version}</version>
                 <type>pom</type>
