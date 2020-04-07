@@ -33,6 +33,16 @@
         </license>
     </licenses>
 
+    <developers>
+        <developer>
+            <id>pivovarit</id>
+            <name>Grzegorz Piwowarek</name>
+            <email>gpiwowarek@gmail.com</email>
+            <organization>Hazelcast</organization>
+        </developer>
+    </developers>
+
+
     <properties>
         <quarkus.version>1.3.0.Final</quarkus.version>
         <hazelcast.version>4.0</hazelcast.version>
