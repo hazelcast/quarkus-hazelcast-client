@@ -20,6 +20,10 @@
     <version>1.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
+    <name>Quarkus Hazelcast Client</name>
+    <description>Quarkus Hazelcast Client Extension</description>
+
+
     <url>https://github.com/hazelcast/quarkus-hazelcast-client</url>
 
     <licenses>
