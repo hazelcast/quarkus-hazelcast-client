@@ -78,3 +78,4 @@ To make testing simple, the extension provides the `HazelcastServerTestResource`
 ## Limitations (native mode)
 - Default Java serialization is not supported
 - User code deployment is not supported
+- Hazelcast SPI support is limited
