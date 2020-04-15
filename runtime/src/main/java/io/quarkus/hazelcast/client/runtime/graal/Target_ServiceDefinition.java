@@ -1,10 +1,7 @@
 package io.quarkus.hazelcast.client.runtime.graal;
 
-import com.hazelcast.internal.util.ServiceLoader;
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
-
-import java.util.function.BooleanSupplier;
 
 import static com.hazelcast.internal.util.Preconditions.isNotNull;
 
