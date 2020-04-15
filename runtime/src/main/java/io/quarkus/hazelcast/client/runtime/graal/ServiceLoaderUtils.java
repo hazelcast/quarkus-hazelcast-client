@@ -1,6 +1,5 @@
 package io.quarkus.hazelcast.client.runtime.graal;
 
-import com.hazelcast.internal.util.ServiceLoader;
 import com.hazelcast.logging.ILogger;
 
 import java.io.BufferedReader;
@@ -17,7 +16,7 @@ final class ServiceLoaderUtils {
     private ServiceLoaderUtils() {
     }
 
-    /**
+    /*
      * Expanded version of {@link com.hazelcast.internal.util.ServiceLoader#parse(ServiceLoader.URLDefinition)
      * that's additionally parameterized with {@link ILogger} }
      */
