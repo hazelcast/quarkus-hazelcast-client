@@ -16,6 +16,14 @@ final class Target_ServiceDefinition {
         this.classLoader = isNotNull(classLoader, "classLoader");
     }
 
+    public String getClassName() {
+        return className;
+    }
+
+    public ClassLoader getClassLoader() {
+        return classLoader;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {

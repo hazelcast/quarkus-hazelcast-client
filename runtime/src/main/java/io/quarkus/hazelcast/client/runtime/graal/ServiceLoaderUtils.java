@@ -17,8 +17,8 @@ final class ServiceLoaderUtils {
     }
 
     /*
-     * Expanded version of {@link com.hazelcast.internal.util.ServiceLoader#parse(ServiceLoader.URLDefinition)
-     * that's additionally parameterized with {@link ILogger} }
+    Expanded version of {@link com.hazelcast.internal.util.ServiceLoader#parse(ServiceLoader.URLDefinition)
+    that's additionally parameterized with {@link ILogger} }
      */
     static Set<Target_ServiceDefinition> parse(URL url, ClassLoader classLoader, ILogger logger) {
         try {
@@ -49,5 +49,9 @@ final class ServiceLoaderUtils {
             logger.severe(e);
         }
         return Collections.emptySet();
+    }
+
+    static ClassLoader resolveClassloader(ClassLoader classLoader) {
+        return classLoader == null ? Thread.currentThread().getContextClassLoader() : classLoader;
     }
 }
