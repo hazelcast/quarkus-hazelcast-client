@@ -5,6 +5,9 @@ import com.hazelcast.logging.ILogger;
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
 
+/*
+ * JCache is not supported under GraalVM, therefore JCache detection infrastructure can be removed.
+ */
 @TargetClass(JCacheDetector.class)
 public final class Target_JCacheDetector {
 
@@ -12,6 +15,7 @@ public final class Target_JCacheDetector {
     public static boolean isJCacheAvailable(ClassLoader classLoader) {
         return false;
     }
+
 
     @Substitute
     public static boolean isJCacheAvailable(ClassLoader classLoader, ILogger logger) {

@@ -1,12 +1,5 @@
 package io.quarkus.hazelcast.client.deployment;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Set;
-
-import org.jboss.jandex.DotName;
-import org.jboss.jandex.Type;
-
 import com.hazelcast.client.cache.impl.HazelcastClientCachingProvider;
 import com.hazelcast.client.impl.ClientExtension;
 import com.hazelcast.client.impl.spi.ClientProxyFactory;
@@ -29,12 +22,8 @@ import com.hazelcast.nio.serialization.PortableFactory;
 import com.hazelcast.nio.serialization.Serializer;
 import com.hazelcast.nio.ssl.BasicSSLContextFactory;
 import com.hazelcast.partition.MigrationListener;
-import com.hazelcast.spi.discovery.DiscoveryStrategy;
 import com.hazelcast.spi.discovery.DiscoveryStrategyFactory;
-import com.hazelcast.spi.discovery.NodeFilter;
-import com.hazelcast.spi.discovery.multicast.MulticastDiscoveryStrategy;
 import com.hazelcast.topic.MessageListener;
-
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
 import io.quarkus.deployment.annotations.BuildProducer;
 import io.quarkus.deployment.annotations.BuildStep;
@@ -42,17 +31,21 @@ import io.quarkus.deployment.annotations.ExecutionTime;
 import io.quarkus.deployment.annotations.Record;
 import io.quarkus.deployment.builditem.ExtensionSslNativeSupportBuildItem;
 import io.quarkus.deployment.builditem.FeatureBuildItem;
+import io.quarkus.deployment.builditem.GeneratedResourceBuildItem;
 import io.quarkus.deployment.builditem.HotDeploymentWatchedFileBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveHierarchyBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveHierarchyIgnoreWarningBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeReinitializedClassBuildItem;
-import io.quarkus.deployment.builditem.nativeimage.ServiceProviderBuildItem;
 import io.quarkus.deployment.util.ServiceUtil;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientBytecodeRecorder;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientConfig;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientProducer;
+import org.jboss.jandex.DotName;
+import org.jboss.jandex.Type;
+
+import java.io.IOException;
 
 class HazelcastClientProcessor {
 
@@ -67,10 +60,12 @@ class HazelcastClientProcessor {
     }
 
     @BuildStep
-    void registerServiceProviders(BuildProducer<ServiceProviderBuildItem> services) throws IOException {
-        registerServiceProviders(DiscoveryStrategyFactory.class, services);
-        registerServiceProviders(ClientExtension.class, services);
-        registerServiceProviders(JsonFactory.class, services);
+    void registerServiceProviders(BuildProducer<GeneratedResourceBuildItem> generatedResources,
+                                  BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
+                                  BuildProducer<NativeImageResourceBuildItem> resources) throws IOException {
+        registerServiceProviders(DiscoveryStrategyFactory.class, resources, reflectiveClasses, generatedResources);
+        registerServiceProviders(ClientExtension.class, resources, reflectiveClasses, generatedResources);
+        registerServiceProviders(JsonFactory.class, resources, reflectiveClasses, generatedResources);
     }
 
     @BuildStep
@@ -137,34 +132,14 @@ class HazelcastClientProcessor {
                 PropertyReplacer.class));
     }
 
-    @BuildStep
-    void registerCustomDiscoveryStrategiesClasses(BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
-            BuildProducer<ReflectiveHierarchyBuildItem> reflectiveClassHierarchies,
-            BuildProducer<ReflectiveHierarchyIgnoreWarningBuildItem> ignoreWarnings) {
-
-        registerTypeHierarchy(reflectiveClassHierarchies, ignoreWarnings,
-                DiscoveryStrategy.class,
-                NodeFilter.class);
-
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false, MulticastDiscoveryStrategy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false,
-                "com.hazelcast.aws.AwsDiscoveryStrategy",
-                "com.hazelcast.aws.AwsDiscoveryStrategyFactory",
-                "com.hazelcast.gcp.GcpDiscoveryStrategy",
-                "com.hazelcast.gcp.GcpDiscoveryStrategyFactory"));
-
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false,
-                "com.hazelcast.kubernetes.HazelcastKubernetesDiscoveryStrategyFactory",
-                "com.hazelcast.kubernetes.HazelcastKubernetesDiscoveryStrategy"));
-    }
-
-    void registerServiceProviders(Class<?> klass, BuildProducer<ServiceProviderBuildItem> services) throws IOException {
+    void registerServiceProviders(Class<?> klass, BuildProducer<NativeImageResourceBuildItem> resources, BuildProducer<ReflectiveClassBuildItem> reflectiveClasses, BuildProducer<GeneratedResourceBuildItem> generatedResources) throws IOException {
         String service = "META-INF/services/" + klass.getName();
 
-        Set<String> implementations = ServiceUtil
-                .classNamesNamedIn(Thread.currentThread().getContextClassLoader(), service);
+        for (String impl : ServiceUtil.classNamesNamedIn(Thread.currentThread().getContextClassLoader(), service)) {
+            reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false, impl));
+        }
 
-        services.produce(new ServiceProviderBuildItem(klass.getName(), new ArrayList<>(implementations)));
+        resources.produce(new NativeImageResourceBuildItem(service));
     }
 
     @BuildStep
