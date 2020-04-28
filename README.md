@@ -16,12 +16,25 @@ Hazelcast is:
 
 ## Configuration
 
-You can add the `hazelcast-client` extension to your Quarkus project by adding the following dependency:
+After configuring `quarkus-universe BOM`:
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.quarkus</groupId>
+                <artifactId>quarkus-universe-bom</artifactId>
+                <version>${insert.newest.quarkus.version.here}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+You can just configure the `hazelcast-client` extension by adding the following dependency:
 
     <dependency>
         <groupId>com.hazelcast</groupId>
         <artifactId>quarkus-hazelcast-client</artifactId>
-        <version>1.0.0-RC3</version>
     </dependency>
     
 ### Quarkus hazelcast-client configuration
