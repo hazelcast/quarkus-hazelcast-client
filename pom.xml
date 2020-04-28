@@ -17,7 +17,7 @@
 
     <groupId>com.hazelcast</groupId>
     <artifactId>quarkus-hazelcast-client-parent</artifactId>
-    <version>1.0.0-RC3-SNAPSHOT</version>
+    <version>1.0.0-RC4-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Quarkus Hazelcast Client</name>
@@ -44,7 +44,7 @@
 
 
     <properties>
-        <quarkus.version>1.3.2.Final</quarkus.version>
+        <quarkus.version>1.4.1.Final</quarkus.version>
         <hazelcast.version>4.0.1</hazelcast.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>

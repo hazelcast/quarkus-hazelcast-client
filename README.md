@@ -19,9 +19,11 @@ Hazelcast is:
 You can add the `hazelcast-client` extension to your Quarkus project by adding the following dependency:
 
     <dependency>
-        <groupId>io.quarkus</groupId>
+        <groupId>com.hazelcast</groupId>
         <artifactId>quarkus-hazelcast-client</artifactId>
+        <version>1.0.0-RC3</version>
     </dependency>
+    
 ### Quarkus hazelcast-client configuration
 
 The extension exposes a single native-mode-compatible Hazelcast Client bean (`HazelcastInstance`) which can be directly injected into your beans:
