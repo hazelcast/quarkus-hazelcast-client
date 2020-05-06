@@ -21,8 +21,7 @@
     <packaging>pom</packaging>
 
     <name>Quarkus Hazelcast Client</name>
-    <description>Quarkus Hazelcast Client Extension</description>
-
+    <description>Connect to the Hazelcast IMDG for distributed caching and in-memory computing</description>
 
     <url>https://github.com/hazelcast/quarkus-hazelcast-client</url>
 
