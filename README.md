@@ -37,6 +37,8 @@ You can just configure the `hazelcast-client` extension by adding the following 
         <artifactId>quarkus-hazelcast-client</artifactId>
     </dependency>
     
+***NOTE:*** You can bootstrap a new application quickly by using [code.quarkus.io](https://code.quarkus.io) and choosing `quarkus-hazelcast-client`
+    
 ### Quarkus hazelcast-client configuration
 
 The extension exposes a single native-mode-compatible Hazelcast Client bean (`HazelcastInstance`) which can be directly injected into your beans:
