@@ -62,7 +62,7 @@
         <maven-deploy-plugin-version>2.8.2</maven-deploy-plugin-version>
         <maven-surefire-plugin-version>2.22.1</maven-surefire-plugin-version>
         <maven-failsafe-plugin-version>2.22.1</maven-failsafe-plugin-version>
-        <maven-jar-plugin-version>3.1.0</maven-jar-plugin-version>
+        <maven-jar-plugin-version>3.2.0</maven-jar-plugin-version>
         <apache-rat-plugin-version>0.13</apache-rat-plugin-version>
 
         <maven.test.redirectTestOutputToFile>true</maven.test.redirectTestOutputToFile>
