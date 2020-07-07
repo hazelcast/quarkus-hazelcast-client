@@ -66,6 +66,11 @@
             <artifactId>quarkus-arc</artifactId>
         </dependency>
 
+      <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-jaxb</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.graalvm.nativeimage</groupId>
             <artifactId>svm</artifactId>
