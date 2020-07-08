@@ -2,7 +2,9 @@
  name: Bug		
  about: Create a report to help us improve		
  labels: 'Type: Defect'		
+ assignees: 'pivovarit'		
 ---
+
 
 <!--
 Thanks for reporting your issue. Please share with us the following information, to help us resolve your issue quickly and efficiently.
