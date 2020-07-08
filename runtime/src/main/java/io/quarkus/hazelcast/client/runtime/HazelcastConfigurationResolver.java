@@ -7,7 +7,6 @@ class HazelcastConfigurationResolver {
     private final HazelcastConfigurationParser parser = new HazelcastConfigurationParser();
 
     ClientConfig resolveClientConfig(HazelcastClientConfig properties) {
-        ClientConfig clientConfig = FailoverClientConfigSupport.resolveClientConfig(null);
-        return parser.fromApplicationProperties(properties, clientConfig);
+        return parser.fromApplicationProperties(properties, ClientConfig.load());
     }
 }
