@@ -5,11 +5,13 @@ import com.hazelcast.client.config.ClientConfig;
 class HazelcastConfigurationParser {
 
     ClientConfig fromApplicationProperties(HazelcastClientConfig config, ClientConfig clientConfig) {
+        setClusterName(clientConfig, config);
         setClusterAddress(clientConfig, config);
         setLabels(clientConfig, config);
 
         setOutboundPorts(clientConfig, config);
         setOutboundPortDefinitions(clientConfig, config);
+
 
         setConnectionTimeout(clientConfig, config);
 
