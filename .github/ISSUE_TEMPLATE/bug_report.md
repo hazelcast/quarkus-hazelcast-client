@@ -1,7 +1,7 @@
 ---		
  name: Bug		
  about: Create a report to help us improve		
- labels: 'Type: Defect'		
+ labels: 'bug'		
  assignees: 'pivovarit'		
 ---
 
