@@ -16,7 +16,7 @@ public class HazelcastClientConfig {
      * Hazelcast Cluster members
      */
     @ConfigItem
-    public Optional<List<InetSocketAddress>> clusterMembers;
+    public Optional<List<String>> clusterMembers;
 
     /**
      * Hazelcast client labels
