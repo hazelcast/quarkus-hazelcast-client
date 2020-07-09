@@ -1,7 +1,5 @@
 package io.quarkus.hazelcast.client.runtime;
 
-import java.net.InetSocketAddress;
-
 import com.hazelcast.client.config.ClientConfig;
 
 class HazelcastConfigurationParser {
@@ -24,6 +22,10 @@ class HazelcastConfigurationParser {
                 clientConfig.getNetworkConfig().addAddress(clusterMember);
             }
         }
+    }
+
+    private void setClusterName(ClientConfig clientConfig, HazelcastClientConfig config) {
+        config.clusterName.ifPresent(clientConfig::setClusterName);
     }
 
     private void setLabels(ClientConfig clientConfig, HazelcastClientConfig config) {
