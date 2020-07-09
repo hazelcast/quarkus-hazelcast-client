@@ -12,7 +12,6 @@ class HazelcastConfigurationParser {
         setOutboundPorts(clientConfig, config);
         setOutboundPortDefinitions(clientConfig, config);
 
-
         setConnectionTimeout(clientConfig, config);
 
         return clientConfig;
