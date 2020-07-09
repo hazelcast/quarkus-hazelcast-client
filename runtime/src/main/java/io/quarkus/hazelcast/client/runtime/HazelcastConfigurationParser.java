@@ -20,8 +20,8 @@ class HazelcastConfigurationParser {
 
     private void setClusterAddress(ClientConfig clientConfig, HazelcastClientConfig config) {
         if (config.clusterMembers.isPresent()) {
-            for (InetSocketAddress clusterMember : config.clusterMembers.get()) {
-                clientConfig.getNetworkConfig().addAddress(clusterMember.toString());
+            for (String clusterMember : config.clusterMembers.get()) {
+                clientConfig.getNetworkConfig().addAddress(clusterMember);
             }
         }
     }
