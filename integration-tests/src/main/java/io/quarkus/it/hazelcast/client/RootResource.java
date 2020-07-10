@@ -1,21 +1,22 @@
 package io.quarkus.it.hazelcast.client;
 
-import javax.inject.Inject;
+import com.hazelcast.core.HazelcastInstance;
+import org.jboss.resteasy.annotations.jaxrs.QueryParam;
+
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
-import org.jboss.resteasy.annotations.jaxrs.QueryParam;
-
-import com.hazelcast.core.HazelcastInstance;
-
 @Path("/hazelcast-client")
 public class RootResource {
 
-    @Inject
-    HazelcastInstance hazelcastInstance;
+    private final HazelcastInstance hazelcastInstance;
+
+    public RootResource(HazelcastInstance hazelcastInstance) {
+        this.hazelcastInstance = hazelcastInstance;
+    }
 
     @POST
     @Path("/ds/put")
@@ -30,8 +31,8 @@ public class RootResource {
     @Path("/ds/get")
     @Produces(MediaType.APPLICATION_JSON)
     public String ds_get(@QueryParam("key") String key) {
-        return hazelcastInstance.<String, DataSerializableWrapper> getMap("ds_map")
-                .getOrDefault(key, new DataSerializableWrapper("default")).getValue();
+        return hazelcastInstance.<String, DataSerializableWrapper>getMap("ds_map")
+          .getOrDefault(key, new DataSerializableWrapper("default")).getValue();
     }
 
     @POST
@@ -47,8 +48,8 @@ public class RootResource {
     @Path("/ids/get")
     @Produces(MediaType.APPLICATION_JSON)
     public String ids_get(@QueryParam("key") String key) {
-        return hazelcastInstance.<String, IdentifiedDataSerializableWrapper> getMap("ids_map")
-                .getOrDefault(key, new IdentifiedDataSerializableWrapper("default")).getValue();
+        return hazelcastInstance.<String, IdentifiedDataSerializableWrapper>getMap("ids_map")
+          .getOrDefault(key, new IdentifiedDataSerializableWrapper("default")).getValue();
     }
 
     @POST
@@ -64,7 +65,7 @@ public class RootResource {
     @Path("/ptable/get")
     @Produces(MediaType.APPLICATION_JSON)
     public String ptable_put_get(@QueryParam("key") String key) {
-        return hazelcastInstance.<String, PortableWrapper> getMap("ptable_map")
-                .getOrDefault(key, new PortableWrapper("default")).getValue();
+        return hazelcastInstance.<String, PortableWrapper>getMap("ptable_map")
+          .getOrDefault(key, new PortableWrapper("default")).getValue();
     }
 }
