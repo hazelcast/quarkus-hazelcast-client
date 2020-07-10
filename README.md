@@ -43,8 +43,11 @@ You can just configure the `hazelcast-client` extension by adding the following 
 
 The extension exposes a single native-mode-compatible Hazelcast Client bean (`HazelcastInstance`) which can be directly injected into your beans:
 
-    @Inject
-    HazelcastInstance hazelcastClient;
+    private final HazelcastInstance hazelcastInstance;
+    
+    public UsersService(HazelcastInstance hazelcastInstance) {
+        this.hazelcastInstance = hazelcastInstance;
+    }
 
 By default, client will try to connect to a Hazelcast instance running on the host using port 5701.
 
