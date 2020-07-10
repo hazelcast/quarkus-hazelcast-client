@@ -1,13 +1,12 @@
 package io.quarkus.hazelcast.client.runtime;
 
-import java.net.InetSocketAddress;
-import java.util.List;
-import java.util.Optional;
-import java.util.OptionalInt;
-
 import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+
+import java.util.List;
+import java.util.Optional;
+import java.util.OptionalInt;
 
 @ConfigRoot(name = "hazelcast-client", phase = ConfigPhase.RUN_TIME)
 public class HazelcastClientConfig {
@@ -16,7 +15,7 @@ public class HazelcastClientConfig {
      * Hazelcast Cluster members
      */
     @ConfigItem
-    public Optional<List<InetSocketAddress>> clusterMembers;
+    public Optional<List<String>> clusterMembers;
 
     /**
      * Hazelcast client labels
