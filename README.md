@@ -50,7 +50,6 @@ By default, client will try to connect to a Hazelcast instance running on the ho
 
 Defaults can be customized using `application.properties` entries such as:
 
-    quarkus.hazelcast-client.cluster-name
     quarkus.hazelcast-client.cluster-members
     quarkus.hazelcast-client.outbound-port-definitions
     quarkus.hazelcast-client.outbound-ports
