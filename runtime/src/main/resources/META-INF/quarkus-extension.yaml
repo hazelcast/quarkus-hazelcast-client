@@ -7,7 +7,7 @@ metadata:
   - "cache"
   - "distributed cache"
   - "caching"
-  guide: "https://quarkus.io/guides/hazelcast-client"
+  guide: "https://github.com/hazelcast/quarkus-hazelcast-client"
   categories:
   - "data"
   status: "preview"
