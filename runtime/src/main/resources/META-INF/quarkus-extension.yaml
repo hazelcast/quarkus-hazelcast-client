@@ -10,4 +10,4 @@ metadata:
   guide: "https://github.com/hazelcast/quarkus-hazelcast-client"
   categories:
   - "data"
-  status: "preview"
+  status: "stable"
