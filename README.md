@@ -56,6 +56,7 @@ Defaults can be customized using `application.properties` entries such as:
     quarkus.hazelcast-client.cluster-members
     quarkus.hazelcast-client.outbound-port-definitions
     quarkus.hazelcast-client.outbound-ports
+    quarkus.hazelcast-client.cluster-name
     quarkus.hazelcast-client.labels
     quarkus.hazelcast-client.connection-timeout
 
