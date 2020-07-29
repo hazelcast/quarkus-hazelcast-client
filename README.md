@@ -61,22 +61,16 @@ Defaults can be customized using `application.properties` entries such as:
 
 For example:
 
-    quarkus.hazelcast-client.cluster-members=localhost
-    
     quarkus.hazelcast-client.cluster-members=localhost:5701
     
-You can also pass multiple values at once by placing them inside square brackets and separated by commas:
-    
-    quarkus.hazelcast-client.cluster-members=[localhost:5701, localhost:5702]
-    
-Full config example:
+If you don't provide a port number, Hazelcast Client will try to autodetect it:
 
-    quarkus.hazelcast-client.cluster-members
-    quarkus.hazelcast-client.outbound-port-definitions
-    quarkus.hazelcast-client.outbound-ports
-    quarkus.hazelcast-client.labels
-    quarkus.hazelcast-client.connection-timeout
-
+    quarkus.hazelcast-client.cluster-members=localhost
+    
+You can also pass a comma-separate list of values as a single entry:
+    
+    quarkus.hazelcast-client.cluster-members=localhost:5701,localhost:5702
+    
 If you need more, use a standard `hazelcast-client.yml/hazelcast-client.xml`-based configuration (described below) or wire-up your own `HazelcastInstance` bean. 
 
 Keep in mind that you will still be able to benefit from GraalVM compatibility!
