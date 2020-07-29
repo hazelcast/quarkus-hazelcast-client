@@ -59,28 +59,36 @@ Defaults can be customized using `application.properties` entries such as:
     quarkus.hazelcast-client.labels
     quarkus.hazelcast-client.connection-timeout
 
-All of them mirror standard Hazelcast Client configuration options.
-
 For example:
 
     quarkus.hazelcast-client.cluster-members=localhost
     
     quarkus.hazelcast-client.cluster-members=localhost:5701
     
-You can also pass multiple values at once by placing them inside square brackets and separated by a comma:
+You can also pass multiple values at once by placing them inside square brackets and separated by commas:
     
     quarkus.hazelcast-client.cluster-members=[localhost:5701, localhost:5702]
+    
+Full config example:
+
+    quarkus.hazelcast-client.cluster-members
+    quarkus.hazelcast-client.outbound-port-definitions
+    quarkus.hazelcast-client.outbound-ports
+    quarkus.hazelcast-client.labels
+    quarkus.hazelcast-client.connection-timeout
 
 If you need more, use a standard `hazelcast-client.yml/hazelcast-client.xml`-based configuration (described below) or wire-up your own `HazelcastInstance` bean. 
+
 Keep in mind that you will still be able to benefit from GraalVM compatibility!
 
 ### Configuration Files
 
-#### Configuration using `hazelcast-client.yml`
+#### Configuration using `hazelcast-client.yml` or `hazelcast-client.xml`
 
-In order to configure the client using the `hazelcast-client.yml` file, place the configuration file in the `src/main/resources` directory.
+In order to configure the client using the `hazelcast-client.yml`/`hazelcast-client.xml` file, place the configuration file in the `src/main/resources` directory.
 
-Configuration entries from `hazelcast-client.yml/xml` are overridden by `quarkus.hazelcast-client.*` entries.
+Keep in mind that configuration entries from `hazelcast-client.yml/xml` are overridden by `quarkus.hazelcast-client.*` entries 
+so it's a good idea to stick to one of these exclusively.
 
 ## Testing
 
