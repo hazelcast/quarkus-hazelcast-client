@@ -80,7 +80,7 @@ Keep in mind that you will still be able to benefit from GraalVM compatibility!
 
 In order to configure the client using the `hazelcast-client.yml` file, place the configuration file in the `src/main/resources` directory.
 
-Configuration entries from `hazelcast-client.yml` override all `quarkus.hazelcast-client.*` entries.
+Configuration entries from `hazelcast-client.yml/xml` are overridden by `quarkus.hazelcast-client.*` entries.
 
 ## Testing
 
