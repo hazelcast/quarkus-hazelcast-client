@@ -105,6 +105,8 @@ To make testing simple, the extension provides the `HazelcastServerTestResource`
     </dependency>
 
 ## Limitations (native mode)
-- Default Java serialization is not supported
-- User code deployment is not supported
-- Hazelcast SPI support can be limited on OSGi
+There's no support for:
+- Default Java serialization
+- User code deployment
+- Hazelcast SPI support on OSGi
+- JCache integration
