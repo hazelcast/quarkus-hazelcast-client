@@ -1,13 +1,14 @@
 package io.quarkus.hazelcast.client.runtime.graal;
 
+import com.hazelcast.internal.util.ServiceLoader;
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
 
 import static com.hazelcast.internal.util.Preconditions.isNotNull;
 
 @Substitute
-@TargetClass(className = "com.hazelcast.internal.util.ServiceLoader", innerClass = "ServiceDefinition")
-final class Target_ServiceDefinition {
+@TargetClass(value = ServiceLoader.class, innerClass = "ServiceDefinition")
+public final class Target_ServiceDefinition {
     private final String className;
     private final ClassLoader classLoader;
 
