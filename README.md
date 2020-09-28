@@ -108,6 +108,11 @@ To make testing simple, the extension provides the `HazelcastServerTestResource`
         <artifactId>quarkus-test-hazelcast</artifactId>
         <scope>test</scope>
     </dependency>
+    
+## Compatibility Matrix
+
+- `1.0.x` is compatible with Quarkus 1.6.x-1.7.x
+- `1.1.x` is compatible with Quarkus 1.8.x+
 
 ## Limitations (native mode)
 There's no support for:
