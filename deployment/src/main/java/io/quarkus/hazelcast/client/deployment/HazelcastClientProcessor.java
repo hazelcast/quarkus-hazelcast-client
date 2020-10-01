@@ -195,9 +195,11 @@ class HazelcastClientProcessor {
         for (Class<?> klass : classNames) {
             DotName simpleName = DotName.createSimple(klass.getName());
 
-            reflectiveHierarchyClass
-                    .produce(new ReflectiveHierarchyBuildItem(Type.create(simpleName, Type.Kind.CLASS)));
-            ignoreWarnings.produce(new ReflectiveHierarchyIgnoreWarningBuildItem(simpleName));
+            reflectiveHierarchyClass.produce(
+              new ReflectiveHierarchyBuildItem.Builder().type(Type.create(simpleName, Type.Kind.CLASS)).build());
+
+            ignoreWarnings.produce(
+              new ReflectiveHierarchyIgnoreWarningBuildItem(simpleName));
         }
     }
 }
