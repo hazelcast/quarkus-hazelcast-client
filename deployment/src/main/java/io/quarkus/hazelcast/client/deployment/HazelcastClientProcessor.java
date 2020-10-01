@@ -98,11 +98,7 @@ class HazelcastClientProcessor {
 
     @BuildStep
     void registerReflectivelyCreatedClasses(BuildProducer<ReflectiveClassBuildItem> reflectiveClasses) {
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false,
-                HazelcastClientCachingProvider.class,
-                DomConfigHelper.class,
-                EventJournalConfig.class,
-                MerkleTreeConfig.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false, HazelcastClientCachingProvider.class));
     }
 
     @BuildStep
