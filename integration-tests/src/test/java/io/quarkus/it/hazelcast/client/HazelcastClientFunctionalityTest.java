@@ -52,4 +52,15 @@ public class HazelcastClientFunctionalityTest {
                 .when().get("/hazelcast-client/ptable/get?key=foo")
                 .then().body(is("foo_value"));
     }
+
+    @Test
+    public void shouldIncrementAtomicLong() {
+        RestAssured
+          .when().get("/hazelcast-client/cp/atomic-long/increment?name=foo")
+          .then().body(is("1"));
+
+        RestAssured
+          .when().get("/hazelcast-client/cp/atomic-long/increment?name=foo")
+          .then().body(is("2"));
+    }
 }
