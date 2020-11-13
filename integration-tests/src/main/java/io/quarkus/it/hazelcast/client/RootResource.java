@@ -1,6 +1,7 @@
 package io.quarkus.it.hazelcast.client;
 
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.cp.IAtomicLong;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 
 import javax.ws.rs.GET;
@@ -67,5 +68,13 @@ public class RootResource {
     public String ptable_put_get(@QueryParam("key") String key) {
         return hazelcastInstance.<String, PortableWrapper>getMap("ptable_map")
           .getOrDefault(key, new PortableWrapper("default")).getValue();
+    }
+
+    @GET
+    @Path("/cp/atomic-long/increment")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String cp_atomic_long(@QueryParam("name") String name) {
+        IAtomicLong atomicLong = hazelcastInstance.getCPSubsystem().getAtomicLong(name);
+        return Long.toString(atomicLong.incrementAndGet());
     }
 }
