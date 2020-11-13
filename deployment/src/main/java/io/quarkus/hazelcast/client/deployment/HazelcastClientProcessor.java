@@ -2,17 +2,32 @@ package io.quarkus.hazelcast.client.deployment;
 
 import com.hazelcast.client.cache.impl.HazelcastClientCachingProvider;
 import com.hazelcast.client.impl.ClientExtension;
+import com.hazelcast.client.impl.proxy.ClientCardinalityEstimatorProxy;
+import com.hazelcast.client.impl.proxy.ClientClusterProxy;
+import com.hazelcast.client.impl.proxy.ClientDurableExecutorServiceProxy;
+import com.hazelcast.client.impl.proxy.ClientExecutorServiceProxy;
+import com.hazelcast.client.impl.proxy.ClientFlakeIdGeneratorProxy;
+import com.hazelcast.client.impl.proxy.ClientListProxy;
+import com.hazelcast.client.impl.proxy.ClientMapProxy;
+import com.hazelcast.client.impl.proxy.ClientMultiMapProxy;
+import com.hazelcast.client.impl.proxy.ClientPNCounterProxy;
+import com.hazelcast.client.impl.proxy.ClientQueueProxy;
+import com.hazelcast.client.impl.proxy.ClientReliableMessageRunner;
+import com.hazelcast.client.impl.proxy.ClientReliableTopicProxy;
+import com.hazelcast.client.impl.proxy.ClientReplicatedMapProxy;
+import com.hazelcast.client.impl.proxy.ClientRingbufferProxy;
+import com.hazelcast.client.impl.proxy.ClientScheduledExecutorProxy;
+import com.hazelcast.client.impl.proxy.ClientScheduledFutureProxy;
+import com.hazelcast.client.impl.proxy.ClientSetProxy;
+import com.hazelcast.client.impl.proxy.ClientTopicProxy;
 import com.hazelcast.client.impl.spi.ClientProxyFactory;
 import com.hazelcast.cluster.MembershipListener;
 import com.hazelcast.collection.ItemListener;
 import com.hazelcast.com.fasterxml.jackson.core.JsonFactory;
-import com.hazelcast.config.EventJournalConfig;
-import com.hazelcast.config.MerkleTreeConfig;
 import com.hazelcast.config.replacer.EncryptionReplacer;
 import com.hazelcast.config.replacer.PropertyReplacer;
 import com.hazelcast.config.replacer.spi.ConfigReplacer;
 import com.hazelcast.core.EntryListener;
-import com.hazelcast.internal.config.DomConfigHelper;
 import com.hazelcast.internal.util.ICMPHelper;
 import com.hazelcast.map.listener.MapListener;
 import com.hazelcast.nio.SocketInterceptor;
@@ -148,6 +163,29 @@ class HazelcastClientProcessor {
 
         reflectiveClasses.produce(
                 new ReflectiveClassBuildItem(false, false, com.hazelcast.config.security.StaticCredentialsFactory.class));
+    }
+
+    @BuildStep
+    void registerDataStructureProxies(BuildProducer<ReflectiveClassBuildItem> reflectiveClasses) {
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientSetProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientQueueProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientCardinalityEstimatorProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientClusterProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientDurableExecutorServiceProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientExecutorServiceProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientFlakeIdGeneratorProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientListProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientMapProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientMultiMapProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientPNCounterProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientQueueProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientReliableMessageRunner.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientReliableTopicProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientReplicatedMapProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientRingbufferProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientScheduledExecutorProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientScheduledFutureProxy.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientTopicProxy.class));
     }
 
     @BuildStep
