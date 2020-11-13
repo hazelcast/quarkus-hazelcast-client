@@ -120,3 +120,4 @@ There's no support for:
 - User code deployment
 - Hazelcast SPI support on OSGi
 - JCache integration
+- JMX
