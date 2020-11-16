@@ -20,6 +20,13 @@ public class HazelcastClientFunctionalityTest {
     }
 
     @Test
+    public void CPSubsystemSmokeTest() {
+        RestAssured
+          .when().get("/hazelcast-client/smoke-test/cp")
+          .then().body(is("OK"));
+    }
+
+    @Test
     public void shouldReadFromDistributedMap() {
         RestAssured
           .when().get("/hazelcast-client/ds/get?key=nonexisting")

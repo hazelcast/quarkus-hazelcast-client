@@ -8,6 +8,10 @@ import com.hazelcast.collection.ISet;
 import com.hazelcast.core.HazelcastInstance;
 import com.hazelcast.core.IExecutorService;
 import com.hazelcast.cp.IAtomicLong;
+import com.hazelcast.cp.IAtomicReference;
+import com.hazelcast.cp.ICountDownLatch;
+import com.hazelcast.cp.ISemaphore;
+import com.hazelcast.cp.lock.FencedLock;
 import com.hazelcast.crdt.pncounter.PNCounter;
 import com.hazelcast.durableexecutor.DurableExecutorService;
 import com.hazelcast.flakeidgen.FlakeIdGenerator;
@@ -90,6 +94,18 @@ public class RootResource {
     public String cp_atomic_long(@QueryParam("name") String name) {
         IAtomicLong atomicLong = hazelcastInstance.getCPSubsystem().getAtomicLong(name);
         return Long.toString(atomicLong.incrementAndGet());
+    }
+
+    @GET
+    @Path("/smoke-test/cp")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String smoke_test_cp() {
+        IAtomicLong atomicLong = hazelcastInstance.getCPSubsystem().getAtomicLong("foo");
+        IAtomicReference<Object> atomicReference = hazelcastInstance.getCPSubsystem().getAtomicReference("foo");
+        ICountDownLatch countDownLatch = hazelcastInstance.getCPSubsystem().getCountDownLatch("foo");
+        FencedLock fencedLock = hazelcastInstance.getCPSubsystem().getLock("foo");
+        ISemaphore semaphore = hazelcastInstance.getCPSubsystem().getSemaphore("foo");
+        return "OK";
     }
 
     @GET
