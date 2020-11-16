@@ -168,7 +168,9 @@ class HazelcastClientProcessor {
     }
 
     @BuildStep
-    void registerDataStructureProxies(BuildProducer<ReflectiveClassBuildItem> reflectiveClasses) {
+    void registerDataStructureProxies(BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
+                                      BuildProducer<ReflectiveHierarchyBuildItem> reflectiveClassHierarchies,
+                                      BuildProducer<ReflectiveHierarchyIgnoreWarningBuildItem> ignoreWarnings) {
         reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientSetProxy.class));
         reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientQueueProxy.class));
         reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientCardinalityEstimatorProxy.class));
@@ -192,6 +194,8 @@ class HazelcastClientProcessor {
         // created reflectively by com.hazelcast.internal.config.ConfigUtils#getConfig
         reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientReliableTopicConfig.class));
         reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientFlakeIdGeneratorConfig.class));
+
+        registerTypeHierarchy(reflectiveClassHierarchies, ignoreWarnings, RuntimeException.class);
     }
 
     @BuildStep
