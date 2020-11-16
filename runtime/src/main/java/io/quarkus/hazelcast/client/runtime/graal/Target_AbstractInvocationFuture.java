@@ -4,7 +4,9 @@ import com.hazelcast.spi.impl.AbstractInvocationFuture;
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
 
-@TargetClass(AbstractInvocationFuture.class)
+import java.util.function.BooleanSupplier;
+
+@TargetClass(value = AbstractInvocationFuture.class, onlyWith = Target_AbstractInvocationFuture.IsHazelcast403.class)
 public final class Target_AbstractInvocationFuture {
 
     @Substitute
@@ -29,5 +31,18 @@ public final class Target_AbstractInvocationFuture {
         } catch (Throwable e) {
         }
         return null;
+    }
+
+    public static final class IsHazelcast403 implements BooleanSupplier {
+
+        @Override
+        public boolean getAsBoolean() {
+            try {
+                AbstractInvocationFuture.class.getDeclaredMethod("tryWrapInSameClass", Throwable.class);
+                return true;
+            } catch (NoSuchMethodException e) {
+                return false;
+            }
+        }
     }
 }
