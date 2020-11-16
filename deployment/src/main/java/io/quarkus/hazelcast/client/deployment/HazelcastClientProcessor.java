@@ -1,6 +1,8 @@
 package io.quarkus.hazelcast.client.deployment;
 
 import com.hazelcast.client.cache.impl.HazelcastClientCachingProvider;
+import com.hazelcast.client.config.ClientFlakeIdGeneratorConfig;
+import com.hazelcast.client.config.ClientReliableTopicConfig;
 import com.hazelcast.client.impl.ClientExtension;
 import com.hazelcast.client.impl.proxy.ClientCardinalityEstimatorProxy;
 import com.hazelcast.client.impl.proxy.ClientClusterProxy;
@@ -186,6 +188,10 @@ class HazelcastClientProcessor {
         reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientScheduledExecutorProxy.class));
         reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientScheduledFutureProxy.class));
         reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientTopicProxy.class));
+
+        // created reflectively by com.hazelcast.internal.config.ConfigUtils#getConfig
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientReliableTopicConfig.class));
+        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientFlakeIdGeneratorConfig.class));
     }
 
     @BuildStep
