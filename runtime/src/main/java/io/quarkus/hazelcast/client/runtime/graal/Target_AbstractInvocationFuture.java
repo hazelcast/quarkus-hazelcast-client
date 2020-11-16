@@ -17,20 +17,18 @@ public final class Target_AbstractInvocationFuture {
             return (T) exceptionClass.getConstructor(String.class, Throwable.class)
               .newInstance(cause.getMessage(), cause);
         } catch (Throwable e) {
+            try {
+                return (T) exceptionClass.getConstructor(Throwable.class).newInstance(cause);
+            } catch (Throwable e2) {
+                try {
+                    T result = (T) exceptionClass.getConstructor(String.class).newInstance(cause.getMessage());
+                    result.initCause(cause);
+                    return result;
+                } catch (Throwable e3) {
+                    return null;
+                }
+            }
         }
-
-        try {
-            return (T) exceptionClass.getConstructor(Throwable.class).newInstance(cause);
-        } catch (Throwable e) {
-        }
-
-        try {
-            T result = (T) exceptionClass.getConstructor(String.class).newInstance(cause.getMessage());
-            result.initCause(cause);
-            return result;
-        } catch (Throwable e) {
-        }
-        return null;
     }
 
     public static final class IsHazelcast403 implements BooleanSupplier {
