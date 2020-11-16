@@ -1,7 +1,25 @@
 package io.quarkus.it.hazelcast.client;
 
+import com.hazelcast.cardinality.CardinalityEstimator;
+import com.hazelcast.collection.BaseQueue;
+import com.hazelcast.collection.IList;
+import com.hazelcast.collection.IQueue;
+import com.hazelcast.collection.ISet;
 import com.hazelcast.core.HazelcastInstance;
+import com.hazelcast.core.IExecutorService;
 import com.hazelcast.cp.IAtomicLong;
+import com.hazelcast.cp.IAtomicReference;
+import com.hazelcast.cp.ICountDownLatch;
+import com.hazelcast.cp.ISemaphore;
+import com.hazelcast.cp.lock.FencedLock;
+import com.hazelcast.crdt.pncounter.PNCounter;
+import com.hazelcast.durableexecutor.DurableExecutorService;
+import com.hazelcast.flakeidgen.FlakeIdGenerator;
+import com.hazelcast.multimap.MultiMap;
+import com.hazelcast.replicatedmap.ReplicatedMap;
+import com.hazelcast.ringbuffer.Ringbuffer;
+import com.hazelcast.scheduledexecutor.IScheduledExecutorService;
+import com.hazelcast.topic.ITopic;
 import org.jboss.resteasy.annotations.jaxrs.QueryParam;
 
 import javax.ws.rs.GET;
@@ -76,5 +94,39 @@ public class RootResource {
     public String cp_atomic_long(@QueryParam("name") String name) {
         IAtomicLong atomicLong = hazelcastInstance.getCPSubsystem().getAtomicLong(name);
         return Long.toString(atomicLong.incrementAndGet());
+    }
+
+    @GET
+    @Path("/smoke-test/cp")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String smoke_test_cp() {
+        IAtomicLong atomicLong = hazelcastInstance.getCPSubsystem().getAtomicLong("foo");
+        IAtomicReference<Object> atomicReference = hazelcastInstance.getCPSubsystem().getAtomicReference("foo");
+        ICountDownLatch countDownLatch = hazelcastInstance.getCPSubsystem().getCountDownLatch("foo");
+        FencedLock fencedLock = hazelcastInstance.getCPSubsystem().getLock("foo");
+        ISemaphore semaphore = hazelcastInstance.getCPSubsystem().getSemaphore("foo");
+        return "OK";
+    }
+
+    @GET
+    @Path("/smoke-test")
+    @Produces(MediaType.APPLICATION_JSON)
+    public String ds_smoke_test() {
+        ISet<Object> iset = hazelcastInstance.getSet("foo");
+        BaseQueue<?> iqueue = hazelcastInstance.getQueue("foo");
+        Ringbuffer<Object> ringbuffer = hazelcastInstance.getRingbuffer("foo");
+        IList<Object> ilist = hazelcastInstance.getList("foo");
+        ReplicatedMap<Object, Object> replicatedMap = hazelcastInstance.getReplicatedMap("foo");
+        MultiMap<Object, Object> multiMap = hazelcastInstance.getMultiMap("foo");
+        IQueue<Object> iQueue = hazelcastInstance.getQueue("foo");
+        ITopic<Object> iTopic = hazelcastInstance.getReliableTopic("foo");
+        ITopic<Object> iReliableTopic = hazelcastInstance.getTopic("foo");
+        CardinalityEstimator cardinalityEstimator = hazelcastInstance.getCardinalityEstimator("foo");
+        FlakeIdGenerator flakeIdGenerator = hazelcastInstance.getFlakeIdGenerator("foo");
+        PNCounter pnCounter = hazelcastInstance.getPNCounter("foo");
+        IExecutorService executorService = hazelcastInstance.getExecutorService("foo");
+        DurableExecutorService durableExecutorService = hazelcastInstance.getDurableExecutorService("foo");
+        IScheduledExecutorService scheduledExecutorService = hazelcastInstance.getScheduledExecutorService("foo");
+        return "OK";
     }
 }
