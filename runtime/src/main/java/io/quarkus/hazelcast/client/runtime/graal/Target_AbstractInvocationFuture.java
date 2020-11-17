@@ -4,7 +4,9 @@ import com.hazelcast.spi.impl.AbstractInvocationFuture;
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
 
-@TargetClass(AbstractInvocationFuture.class)
+import java.util.function.BooleanSupplier;
+
+@TargetClass(value = AbstractInvocationFuture.class, onlyWith = Target_AbstractInvocationFuture.IsHazelcast403.class)
 public final class Target_AbstractInvocationFuture {
 
     @Substitute
@@ -15,19 +17,30 @@ public final class Target_AbstractInvocationFuture {
             return (T) exceptionClass.getConstructor(String.class, Throwable.class)
               .newInstance(cause.getMessage(), cause);
         } catch (Throwable e) {
+            try {
+                return (T) exceptionClass.getConstructor(Throwable.class).newInstance(cause);
+            } catch (Throwable e2) {
+                try {
+                    T result = (T) exceptionClass.getConstructor(String.class).newInstance(cause.getMessage());
+                    result.initCause(cause);
+                    return result;
+                } catch (Throwable e3) {
+                    return null;
+                }
+            }
         }
+    }
 
-        try {
-            return (T) exceptionClass.getConstructor(Throwable.class).newInstance(cause);
-        } catch (Throwable e) {
-        }
+    public static final class IsHazelcast403 implements BooleanSupplier {
 
-        try {
-            T result = (T) exceptionClass.getConstructor(String.class).newInstance(cause.getMessage());
-            result.initCause(cause);
-            return result;
-        } catch (Throwable e) {
+        @Override
+        public boolean getAsBoolean() {
+            try {
+                AbstractInvocationFuture.class.getDeclaredMethod("tryWrapInSameClass", Throwable.class);
+                return true;
+            } catch (NoSuchMethodException e) {
+                return false;
+            }
         }
-        return null;
     }
 }
