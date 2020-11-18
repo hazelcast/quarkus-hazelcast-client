@@ -1,10 +1,13 @@
 package io.quarkus.hazelcast.client.runtime.graal;
 
 import com.hazelcast.internal.util.ExceptionUtil;
+import com.hazelcast.spi.impl.AbstractInvocationFuture;
 import com.oracle.svm.core.annotate.Substitute;
 import com.oracle.svm.core.annotate.TargetClass;
 
-@TargetClass(ExceptionUtil.class)
+import java.util.function.BooleanSupplier;
+
+@TargetClass(value = ExceptionUtil.class, onlyWith = Target_ExceptionUtil.IsHazelcast41.class)
 public final class Target_ExceptionUtil {
 
     @Substitute
@@ -29,6 +32,19 @@ public final class Target_ExceptionUtil {
                         return null;
                     }
                 }
+            }
+        }
+    }
+
+    public static final class IsHazelcast41 implements BooleanSupplier {
+
+        @Override
+        public boolean getAsBoolean() {
+            try {
+                ExceptionUtil.class.getDeclaredMethod("tryCreateExceptionWithMessageAndCause", Class.class, String.class, Throwable.class);
+                return true;
+            } catch (NoSuchMethodException e) {
+                return false;
             }
         }
     }
