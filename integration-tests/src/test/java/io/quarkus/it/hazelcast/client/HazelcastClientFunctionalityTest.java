@@ -1,5 +1,6 @@
 package io.quarkus.it.hazelcast.client;
 
+import com.hazelcast.config.Config;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.hazelcast.HazelcastServerTestResource;
 import io.quarkus.test.junit.QuarkusTest;
@@ -12,7 +13,7 @@ import static org.hamcrest.Matchers.is;
 @QuarkusTestResource(HazelcastServerTestResource.class)
 public class HazelcastClientFunctionalityTest {
 
-    @Test
+   /* @Test
     public void dataStructuresSmokeTest() {
         RestAssured
           .when().get("/hazelcast-client/smoke-test")
@@ -24,7 +25,7 @@ public class HazelcastClientFunctionalityTest {
         RestAssured
           .when().get("/hazelcast-client/smoke-test/cp")
           .then().body(is("OK"));
-    }
+    }*/
 
     @Test
     public void shouldReadFromDistributedMap() {
@@ -33,7 +34,7 @@ public class HazelcastClientFunctionalityTest {
           .then().body(is("default"));
     }
 
-    @Test
+   /* @Test
     public void shouldWriteDataSerializableToDistributedMap() {
         RestAssured
           .when().post("/hazelcast-client/ds/put?key=foo&value=foo_value")
@@ -64,9 +65,9 @@ public class HazelcastClientFunctionalityTest {
         RestAssured
           .when().get("/hazelcast-client/ptable/get?key=foo")
           .then().body(is("foo_value"));
-    }
+    }*/
 
-    @Test
+   /* @Test
     public void shouldIncrementAtomicLong() {
         RestAssured
           .when().get("/hazelcast-client/cp/atomic-long/increment?name=foo")
@@ -75,5 +76,5 @@ public class HazelcastClientFunctionalityTest {
         RestAssured
           .when().get("/hazelcast-client/cp/atomic-long/increment?name=foo")
           .then().body(is("2"));
-    }
+    }*/
 }

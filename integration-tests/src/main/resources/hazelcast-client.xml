@@ -2,7 +2,7 @@
 <hazelcast-client xmlns="http://www.hazelcast.com/schema/client-config"
                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                   xsi:schemaLocation="http://www.hazelcast.com/schema/client-config
-http://www.hazelcast.com/schema/client-config/hazelcast-client-config-4.0.xsd">
+http://www.hazelcast.com/schema/client-config/hazelcast-client-config-4.1.xsd">
 
     <config-replacers fail-if-value-missing="false">
         <replacer class-name="com.hazelcast.config.replacer.EncryptionReplacer">
@@ -20,12 +20,13 @@ http://www.hazelcast.com/schema/client-config/hazelcast-client-config-4.0.xsd">
     <network>
         <cluster-members>
             <address>127.0.0.1</address>
+            <address>127.0.0.2</address>
         </cluster-members>
         <outbound-ports>
             <ports>34600</ports>
             <ports>34700-34710</ports>
         </outbound-ports>
-        <smart-routing>false</smart-routing>
+        <smart-routing>true</smart-routing>
         <redo-operation>true</redo-operation>
         <connection-timeout>60000</connection-timeout>
         <socket-options>
@@ -35,8 +36,99 @@ http://www.hazelcast.com/schema/client-config/hazelcast-client-config-4.0.xsd">
             <linger-seconds>3</linger-seconds>
             <buffer-size>128</buffer-size>
         </socket-options>
+        <socket-interceptor enabled="true">
+            <class-name>com.hazelcast.examples.MySocketInterceptor</class-name>
+            <properties>
+                <property name="foo">bar</property>
+            </properties>
+        </socket-interceptor>
+
+        <ssl enabled="false">
+            <factory-class-name>com.hazelcast.nio.ssl.BasicSSLContextFactory</factory-class-name>
+            <properties>
+                <property name="protocol">TLS</property>
+
+                <property name="trustStore">/opt/hazelcast-client.truststore</property>
+                <property name="trustStorePassword">secret.123456</property>
+                <property name="trustStoreType">JKS</property>
+
+                <!-- Following properties are only needed when the mutual authentication is used. -->
+                <property name="keyStore">/opt/hazelcast-client.keystore</property>
+                <property name="keyStorePassword">keystorePassword123</property>
+                <property name="keyStoreType">JKS</property>
+            </properties>
+        </ssl>
+        <auto-detection enabled="false"/>
+        <aws enabled="false">
+            <access-key>my-access-key</access-key>
+            <secret-key>my-secret-key</secret-key>
+            <region>us-west-1</region>
+            <host-header>ec2.amazonaws.com</host-header>
+            <connection-timeout-seconds>7</connection-timeout-seconds>
+            <read-timeout-seconds>7</read-timeout-seconds>
+            <connection-retries>4</connection-retries>
+            <hz-port>5701-5710</hz-port>
+            <use-public-ip>true</use-public-ip>
+            <tag-key>type</tag-key>
+            <tag-value>hz-nodes</tag-value>
+            <security-group-name>hazelcast-sg</security-group-name>
+            <iam-role>dummy</iam-role>
+            <!--
+            <cluster>my-cluster</cluster>
+            <family>test-family</family>
+            <service-name>test-service</service-name>
+            -->
+        </aws>
+        <gcp enabled="false">
+            <private-key-path>key-path</private-key-path>
+            <projects>project-1,project-2</projects>
+            <region>us-central1</region>
+            <zones>us-central1-b,us-central1-c</zones>
+            <label>key=value</label>
+            <hz-port>5701-5710</hz-port>
+            <use-public-ip>true</use-public-ip>
+        </gcp>
+        <azure enabled="false">
+            <instance-metadata-available>false</instance-metadata-available>
+            <client-id>CLIENT_ID</client-id>
+            <client-secret>CLIENT_SECRET</client-secret>
+            <tenant-id>TENANT_ID</tenant-id>
+            <subscription-id>SUB_ID</subscription-id>
+            <resource-group>RESOURCE-GROUP-NAME</resource-group>
+            <scale-set>SCALE-SET-NAME</scale-set>
+            <tag>TAG-NAME=HZLCAST001</tag>
+            <hz-port>5701-5707</hz-port>
+            <use-public-ip>true</use-public-ip>
+        </azure>
+        <kubernetes enabled="false">
+            <namespace>MY-KUBERNETES-NAMESPACE</namespace>
+            <service-name>MY-SERVICE-NAME</service-name>
+            <service-label-name>MY-SERVICE-LABEL-NAME</service-label-name>
+            <service-label-value>MY-SERVICE-LABEL-VALUE</service-label-value>
+        </kubernetes>
+        <eureka enabled="false">
+            <self-registration>true</self-registration>
+            <namespace>hazelcast</namespace>
+        </eureka>
+        <icmp-ping enabled="false">
+            <timeout-milliseconds>2000</timeout-milliseconds>
+            <interval-milliseconds>3000</interval-milliseconds>
+            <ttl>100</ttl>
+            <max-attempts>5</max-attempts>
+            <echo-fail-fast-on-startup>false</echo-fail-fast-on-startup>
+        </icmp-ping>
+        <hazelcast-cloud enabled="false">
+            <discovery-token>EXAMPLE_TOKEN</discovery-token>
+        </hazelcast-cloud>
         <discovery-strategies>
-            <node-filter class="io.quarkus.it.hazelcast.client.CustomNodeFilter"/>
+            <node-filter class="DummyFilterClass"/>
+            <discovery-strategy class="DummyDiscoveryStrategy1" enabled="true">
+                <properties>
+                    <property name="key-string">foo</property>
+                    <property name="key-int">123</property>
+                    <property name="key-boolean">true</property>
+                </properties>
+            </discovery-strategy>
         </discovery-strategies>
     </network>
 
