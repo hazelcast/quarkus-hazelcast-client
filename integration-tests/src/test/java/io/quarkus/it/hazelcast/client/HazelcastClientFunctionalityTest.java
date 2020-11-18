@@ -1,6 +1,5 @@
 package io.quarkus.it.hazelcast.client;
 
-import com.hazelcast.config.Config;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.hazelcast.HazelcastServerTestResource;
 import io.quarkus.test.junit.QuarkusTest;
