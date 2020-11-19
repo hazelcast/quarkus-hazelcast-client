@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<hazelcast-client xmlns="http://www.hazelcast.com/schema/client-config"
+                  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                  xsi:schemaLocation="http://www.hazelcast.com/schema/client-config
+http://www.hazelcast.com/schema/client-config/hazelcast-client-config-4.0.xsd">
+
+    <config-replacers fail-if-value-missing="false">
+        <replacer class-name="com.hazelcast.config.replacer.EncryptionReplacer">
+            <properties>
+                <property name="passwordFile">password</property>
+                <property name="passwordUserProperties">false</property>
+                <property name="cipherAlgorithm">DES</property>
+                <property name="keyLengthBits">64</property>
+                <property name="secretKeyAlgorithm">DES</property>
+                <property name="secretKeyFactoryAlgorithm">PBKDF2WithHmacSHA1</property>
+            </properties>
+        </replacer>
+    </config-replacers>
+
+    <network>
+        <cluster-members>
+            <address>127.0.0.1</address>
+        </cluster-members>
+        <smart-routing>true</smart-routing>
+        <redo-operation>true</redo-operation>
+        <connection-timeout>60000</connection-timeout>
+        <socket-options>
+            <tcp-no-delay>false</tcp-no-delay>
+            <keep-alive>true</keep-alive>
+            <reuse-address>true</reuse-address>
+            <linger-seconds>3</linger-seconds>
+            <buffer-size>128</buffer-size>
+        </socket-options>
+        <discovery-strategies>
+            <node-filter class="io.quarkus.it.hazelcast.client.CustomNodeFilter"/>
+        </discovery-strategies>
+    </network>
+
+    <serialization>
+        <portable-version>3</portable-version>
+        <use-native-byte-order>true</use-native-byte-order>
+        <byte-order>BIG_ENDIAN</byte-order>
+        <enable-compression>false</enable-compression>
+        <enable-shared-object>true</enable-shared-object>
+        <allow-unsafe>false</allow-unsafe>
+        <data-serializable-factories>
+            <data-serializable-factory factory-id="42">
+                io.quarkus.it.hazelcast.client.IdentifiedDataSerializableWrapperFactory
+            </data-serializable-factory>
+        </data-serializable-factories>
+        <portable-factories>
+            <portable-factory factory-id="1">io.quarkus.it.hazelcast.client.PortableWrapperFactory</portable-factory>
+        </portable-factories>
+    </serialization>
+
+    <metrics enabled="false">
+        <jmx enabled="false"/>
+        <collection-frequency-seconds>42</collection-frequency-seconds>
+    </metrics>
+
+</hazelcast-client>
