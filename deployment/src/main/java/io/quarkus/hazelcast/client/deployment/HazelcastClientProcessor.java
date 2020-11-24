@@ -4,6 +4,8 @@ import com.hazelcast.client.cache.impl.HazelcastClientCachingProvider;
 import com.hazelcast.client.config.ClientFlakeIdGeneratorConfig;
 import com.hazelcast.client.config.ClientReliableTopicConfig;
 import com.hazelcast.client.impl.ClientExtension;
+import com.hazelcast.client.impl.connection.tcp.WaitStrategy;
+import com.hazelcast.client.impl.protocol.task.topic.TopicAddMessageListenerMessageTask;
 import com.hazelcast.client.impl.proxy.ClientCardinalityEstimatorProxy;
 import com.hazelcast.client.impl.proxy.ClientClusterProxy;
 import com.hazelcast.client.impl.proxy.ClientDurableExecutorServiceProxy;
@@ -23,6 +25,7 @@ import com.hazelcast.client.impl.proxy.ClientScheduledFutureProxy;
 import com.hazelcast.client.impl.proxy.ClientSetProxy;
 import com.hazelcast.client.impl.proxy.ClientTopicProxy;
 import com.hazelcast.client.impl.spi.ClientProxyFactory;
+import com.hazelcast.client.util.RandomLB;
 import com.hazelcast.cluster.MembershipListener;
 import com.hazelcast.collection.ItemListener;
 import com.hazelcast.com.fasterxml.jackson.core.JsonFactory;
@@ -30,7 +33,13 @@ import com.hazelcast.config.replacer.EncryptionReplacer;
 import com.hazelcast.config.replacer.PropertyReplacer;
 import com.hazelcast.config.replacer.spi.ConfigReplacer;
 import com.hazelcast.core.EntryListener;
+import com.hazelcast.internal.diagnostics.EventQueuePlugin;
+import com.hazelcast.internal.diagnostics.OverloadedConnectionsPlugin;
+import com.hazelcast.internal.networking.nio.NioThread;
 import com.hazelcast.internal.util.ICMPHelper;
+import com.hazelcast.internal.util.RandomPicker;
+import com.hazelcast.internal.util.ThreadLocalRandomProvider;
+import com.hazelcast.internal.util.executor.StripedExecutor;
 import com.hazelcast.map.listener.MapListener;
 import com.hazelcast.nio.SocketInterceptor;
 import com.hazelcast.nio.serialization.DataSerializable;
@@ -54,6 +63,7 @@ import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveHierarchyBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveHierarchyIgnoreWarningBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.RuntimeReinitializedClassBuildItem;
 import io.quarkus.deployment.util.ServiceUtil;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientBytecodeRecorder;
@@ -231,8 +241,24 @@ class HazelcastClientProcessor {
     }
 
     @BuildStep
+    void initializeRandomHolderAtRuntime(BuildProducer<RuntimeInitializedClassBuildItem> runtimeInitializedClasses) {
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(WaitStrategy.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(TopicAddMessageListenerMessageTask.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(ClientDurableExecutorServiceProxy.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(ClientExecutorServiceProxy.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(RandomLB.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(EventQueuePlugin.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(OverloadedConnectionsPlugin.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(NioThread.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(StripedExecutor.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(ThreadLocalRandomProvider.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(RandomPicker.class.getName()));
+    }
+
+    @BuildStep
     void registerXMLParsingUtilities(BuildProducer<NativeImageResourceBuildItem> resources) {
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-4.0.xsd"));
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-4.1.xsd"));
     }
 
     private static void registerTypeHierarchy(
