@@ -1,18 +1,18 @@
-name: build
+name: CI
 
 on:
   push:
     paths-ignore:
       - '**.md'
+      - '**.yml'
 
 jobs:
-  build:
+  build-jvm:
     runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
       matrix:
         java: [ 11 ]
-        graal: [ 20.2.0 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -27,22 +27,17 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
 
-      - name: Pull Quarkus Native Builder Image ${{ matrix.graal }}-java${{ matrix.java }}
-        run: docker pull quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
-
-      - name: Build - JVM
+      - name: Build on JVM
         run: mvn -B verify
 
-      - name: Build - Native
-        run: mvn -B verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
-
-  build_41:
+  build-graalvm:
+    needs: build-jvm
     runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
       matrix:
         java: [ 11 ]
-        graal: [ 20.2.0 ]
+        graal: [ 20.2.0, 20.3.0 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -60,13 +55,11 @@ jobs:
       - name: Pull Quarkus Native Builder Image ${{ matrix.graal }}-java${{ matrix.java }}
         run: docker pull quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
 
-      - name: Build - JVM
-        run: mvn -B -Dhazelcast.version=4.1 verify
+      - name: Build on GraalVM ${{ matrix.graal }}
+        run: mvn -B verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
 
-      - name: Build - Native
-        run: mvn -B -Dhazelcast.version=4.1 verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
-
-  build-native-default:
+  build-graalvm-default:
+    needs: build-jvm
     runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
@@ -86,5 +79,5 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
 
-      - name: Build - Native
-        run: mvn -B clean verify -Dnative -Dquarkus.native.container-build=true
+      - name: Build on default GraalVM version
+        run: mvn -B verify -Dnative -Dquarkus.native.container-build=true
