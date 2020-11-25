@@ -36,7 +36,7 @@ jobs:
       fail-fast: false
       matrix:
         java: [ 11 ]
-        graal: [ 20.2.0 ]
+        graal: [ 20.2.0, 20.3.0 ]
 
     steps:
       - uses: actions/checkout@v2
