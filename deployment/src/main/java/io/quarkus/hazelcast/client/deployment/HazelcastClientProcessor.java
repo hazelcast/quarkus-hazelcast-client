@@ -4,7 +4,6 @@ import com.hazelcast.client.cache.impl.HazelcastClientCachingProvider;
 import com.hazelcast.client.config.ClientFlakeIdGeneratorConfig;
 import com.hazelcast.client.config.ClientReliableTopicConfig;
 import com.hazelcast.client.impl.ClientExtension;
-import com.hazelcast.client.impl.connection.nio.WaitStrategy;
 import com.hazelcast.client.impl.protocol.task.topic.TopicAddMessageListenerMessageTask;
 import com.hazelcast.client.impl.proxy.ClientCardinalityEstimatorProxy;
 import com.hazelcast.client.impl.proxy.ClientClusterProxy;
@@ -242,7 +241,12 @@ class HazelcastClientProcessor {
 
     @BuildStep
     void initializeRandomHolderAtRuntime(BuildProducer<RuntimeInitializedClassBuildItem> runtimeInitializedClasses) {
-        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(WaitStrategy.class.getName()));
+        try {
+            Class.forName("com.hazelcast.client.impl.connection.nio.WaitStrategy");
+            runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem("com.hazelcast.client.impl.connection.nio.WaitStrategy"));
+        } catch (Throwable e) {
+            runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem("com.hazelcast.client.impl.connection.tcp.WaitStrategy"));
+        }
         runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(TopicAddMessageListenerMessageTask.class.getName()));
         runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(ClientDurableExecutorServiceProxy.class.getName()));
         runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(ClientExecutorServiceProxy.class.getName()));
@@ -258,6 +262,7 @@ class HazelcastClientProcessor {
     @BuildStep
     void registerXMLParsingUtilities(BuildProducer<NativeImageResourceBuildItem> resources) {
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-4.0.xsd"));
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-4.1.xsd"));
     }
 
     private static void registerTypeHierarchy(
