@@ -1,18 +1,43 @@
-name: build
+name: CI
 
 on:
   push:
     paths-ignore:
       - '**.md'
+      - '**.yml'
 
 jobs:
-  build:
+  build-jvm:
     runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
       matrix:
         java: [ 11 ]
-        graal: [ 20.2.0 ]
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/cache@v2
+        with:
+          path: ~/.m2/repository
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: |
+            ${{ runner.os }}-maven-
+      - name: Install JDK ${{ matrix.java }}
+        uses: actions/setup-java@v1
+        with:
+          java-version: ${{ matrix.java }}
+
+      - name: Build on JVM
+        run: mvn -B verify
+
+  build-graalvm:
+    needs: build-jvm
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        java: [ 11 ]
+        graal: [ 20.2.0, 20.3.0 ]
 
     steps:
       - uses: actions/checkout@v2
@@ -30,13 +55,11 @@ jobs:
       - name: Pull Quarkus Native Builder Image ${{ matrix.graal }}-java${{ matrix.java }}
         run: docker pull quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
 
-      - name: Build - JVM
-        run: mvn -B clean verify
+      - name: Build on GraalVM ${{ matrix.graal }}
+        run: mvn -B verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
 
-      - name: Build - Native
-        run: mvn -B clean verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
-
-  build-native-default:
+  build-graalvm-default:
+    needs: build-jvm
     runs-on: ubuntu-18.04
     strategy:
       fail-fast: false
@@ -56,5 +79,5 @@ jobs:
         with:
           java-version: ${{ matrix.java }}
 
-      - name: Build - Native
-        run: mvn -B clean verify -Dnative -Dquarkus.native.container-build=true
+      - name: Build on default GraalVM version
+        run: mvn -B verify -Dnative -Dquarkus.native.container-build=true
