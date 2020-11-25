@@ -29,7 +29,7 @@ jobs:
       - name: Build on JVM
         run: mvn -B verify
 
-  build-graalvm-20_2:
+  build-graalvm:
     needs: build-jvm
     runs-on: ubuntu-18.04
     strategy:
