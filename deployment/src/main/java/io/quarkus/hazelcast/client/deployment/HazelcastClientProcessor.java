@@ -47,6 +47,7 @@ import com.hazelcast.nio.serialization.PortableFactory;
 import com.hazelcast.nio.serialization.Serializer;
 import com.hazelcast.nio.ssl.BasicSSLContextFactory;
 import com.hazelcast.partition.MigrationListener;
+import com.hazelcast.query.extractor.ValueExtractor;
 import com.hazelcast.spi.discovery.DiscoveryStrategyFactory;
 import com.hazelcast.topic.MessageListener;
 import io.quarkus.arc.deployment.AdditionalBeanBuildItem;
@@ -139,6 +140,7 @@ class HazelcastClientProcessor {
                 MessageListener.class,
                 ItemListener.class,
                 MapListener.class,
+                ValueExtractor.class,
                 com.hazelcast.client.impl.ClientExtension.class,
                 ClientProxyFactory.class);
     }
