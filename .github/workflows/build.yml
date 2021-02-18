@@ -36,8 +36,8 @@ jobs:
       fail-fast: false
       matrix:
         java: [ 11 ]
-        graal: [ 20.2.0, 20.3.1 ]
-        hazelcast: [ 4.0.3, 4.1 ]
+        graal: [ 20.3.1 ]
+        hazelcast: [ 4.0.3, 4.1.1 ]
 
     steps:
       - uses: actions/checkout@v2
