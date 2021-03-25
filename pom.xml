@@ -44,7 +44,7 @@
 
     <properties>
         <quarkus.version>1.13.0.Final</quarkus.version>
-        <hazelcast.version>4.1.2</hazelcast.version>
+        <hazelcast.version>4.2</hazelcast.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
