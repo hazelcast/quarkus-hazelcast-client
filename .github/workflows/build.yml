@@ -22,8 +22,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Install JDK ${{ matrix.java }}
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
+          distribution: 'zulu'
           java-version: ${{ matrix.java }}
 
       - name: Build on JVM
@@ -48,8 +49,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Install JDK ${{ matrix.java }}
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
+          distribution: 'zulu'
           java-version: ${{ matrix.java }}
 
       - name: Pull Quarkus Native Builder Image ${{ matrix.graal }}-java${{ matrix.java }}
@@ -75,8 +77,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
       - name: Install JDK ${{ matrix.java }}
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v2
         with:
+          distribution: 'zulu'
           java-version: ${{ matrix.java }}
 
       - name: Build on default GraalVM version
