@@ -17,15 +17,6 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
-
-            <!-- Quarkus Build Parent / BOM -->
-            <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-test-framework</artifactId>
-                <version>${quarkus.version}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
         </dependencies>
     </dependencyManagement>
 
