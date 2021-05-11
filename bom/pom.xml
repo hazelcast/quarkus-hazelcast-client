@@ -47,6 +47,14 @@
                 <version>${hazelcast.version}</version>
             </dependency>
 
+            <!-- JCache  -->
+
+            <dependency>
+                <groupId>javax.cache</groupId>
+                <artifactId>cache-api</artifactId>
+                <version>${jcache.version}</version>
+            </dependency>
+
             <!-- Extension Module -->
 
             <dependency>
