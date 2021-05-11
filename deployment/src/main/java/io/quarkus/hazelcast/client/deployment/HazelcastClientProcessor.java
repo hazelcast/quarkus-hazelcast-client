@@ -124,11 +124,6 @@ class HazelcastClientProcessor {
     }
 
     @BuildStep
-    void registerReflectivelyCreatedClasses(BuildProducer<ReflectiveClassBuildItem> reflectiveClasses) {
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false, HazelcastClientCachingProvider.class));
-    }
-
-    @BuildStep
     void registerCustomImplementationClasses(BuildProducer<ReflectiveHierarchyBuildItem> reflectiveClassHierarchies,
             BuildProducer<ReflectiveHierarchyIgnoreWarningBuildItem> ignoreWarnings) {
 
