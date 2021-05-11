@@ -17,7 +17,7 @@
 
     <groupId>com.hazelcast</groupId>
     <artifactId>quarkus-hazelcast-client-parent</artifactId>
-    <version>1.2.0</version>
+    <version>1.2.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Quarkus Hazelcast Client</name>
