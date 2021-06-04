@@ -43,7 +43,7 @@
 
 
     <properties>
-        <quarkus.version>1.13.6.Final</quarkus.version>
+        <quarkus.version>2.0.0.CR3</quarkus.version>
         <hazelcast.version>4.2</hazelcast.version>
         <jcache.version>1.1.1</jcache.version>
 
