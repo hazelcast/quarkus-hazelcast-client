@@ -55,6 +55,14 @@
                 <version>${jcache.version}</version>
             </dependency>
 
+            <!-- Affinity  -->
+
+            <dependency>
+                <groupId>net.openhft</groupId>
+                <artifactId>affinity</artifactId>
+                <version>${affinity.version}</version>
+            </dependency>
+
             <!-- Extension Module -->
 
             <dependency>
