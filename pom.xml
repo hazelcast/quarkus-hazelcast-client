@@ -44,7 +44,7 @@
 
     <properties>
         <quarkus.version>2.0.0.Final</quarkus.version>
-        <hazelcast.version>4.2</hazelcast.version>
+        <hazelcast.version>4.2.1</hazelcast.version>
         <jcache.version>1.1.1</jcache.version>
         <affinity.version>3.20.0</affinity.version>
 
