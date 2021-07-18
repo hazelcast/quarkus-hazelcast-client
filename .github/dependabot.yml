@@ -12,16 +12,4 @@ updates:
     schedule:
       interval: "daily"
       time: "02:00"
-  - package-ecosystem: "maven"
-    directory: "/"
-    target-branch: "1.1.z"
-    schedule:
-      interval: "daily"
-      time: "02:00"
-  - package-ecosystem: "github-actions"
-    directory: "/"
-    target-branch: "1.1.z"
-    schedule:
-      interval: "daily"
-      time: "02:00"
 
