@@ -199,6 +199,7 @@
                         </goals>
                         <configuration>
                             <rules>
+                                <dependencyConvergence/>
                                 <requireMavenVersion>
                                     <version>${supported-maven-versions}</version>
                                 </requireMavenVersion>
