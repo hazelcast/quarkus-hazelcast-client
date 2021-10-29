@@ -267,6 +267,7 @@ class HazelcastClientProcessor {
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-4.1.xsd"));
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-4.2.xsd"));
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.0.xsd"));
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.1.xsd"));
     }
 
     private static void registerTypeHierarchy(
