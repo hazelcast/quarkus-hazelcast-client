@@ -17,7 +17,7 @@
 
     <groupId>com.hazelcast</groupId>
     <artifactId>quarkus-hazelcast-client-parent</artifactId>
-    <version>2.0.1-SNAPSHOT</version>
+    <version>3.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Quarkus Hazelcast Client</name>
@@ -43,7 +43,7 @@
 
 
     <properties>
-        <quarkus.version>2.6.3.Final</quarkus.version>
+        <quarkus.version>2.7.1.Final</quarkus.version>
         <hazelcast.version>5.0.2</hazelcast.version>
         <jcache.version>1.1.1</jcache.version>
         <affinity.version>3.20.0</affinity.version>
@@ -266,7 +266,7 @@
                     <plugin>
                         <groupId>org.sonatype.plugins</groupId>
                         <artifactId>nexus-staging-maven-plugin</artifactId>
-                        <version>1.6.8</version>
+                        <version>1.6.11</version>
                         <extensions>true</extensions>
                         <configuration>
                             <serverId>release-repository</serverId>
