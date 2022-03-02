@@ -17,7 +17,7 @@ jobs:
         java: [ 11 ]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.0
       - uses: actions/cache@v2.1.7
         with:
           path: ~/.m2/repository
@@ -44,7 +44,7 @@ jobs:
         hazelcast: [ '5.0.2', '5.1-BETA-1' ]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.0
       - uses: actions/cache@v2.1.7
         with:
           path: ~/.m2/repository
@@ -72,7 +72,7 @@ jobs:
         java: [ 11 ]
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v3.0.0
       - uses: actions/cache@v2.1.7
         with:
           path: ~/.m2/repository
