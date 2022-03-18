@@ -41,7 +41,7 @@ jobs:
       matrix:
         java: [ '11' ]
         graal: [ '21.3.0', '22.0.0' ]
-        hazelcast: [ '5.0.2', '5.1' ]
+        hazelcast: [ '5.0.2', '5.1.1' ]
 
     steps:
       - uses: actions/checkout@v3.0.0
