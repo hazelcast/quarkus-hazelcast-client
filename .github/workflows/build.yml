@@ -40,8 +40,8 @@ jobs:
       fail-fast: false
       matrix:
         java: [ '11' ]
-        graal: [ '21.3.0', '22.0.0' ]
-        hazelcast: [ '5.0.2', '5.1.1' ]
+        graal: [ '22.2.0' ]
+        hazelcast: [ '5.0.2', '5.1.1', '5.2.0 ]
 
     steps:
       - uses: actions/checkout@v3.1.0
