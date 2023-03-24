@@ -3,6 +3,7 @@ package io.quarkus.test.hazelcast;
 import java.util.Collections;
 import java.util.Map;
 
+import com.hazelcast.config.Config;
 import com.hazelcast.core.Hazelcast;
 import com.hazelcast.core.HazelcastInstance;
 
@@ -14,7 +15,9 @@ public class HazelcastServerTestResource implements QuarkusTestResourceLifecycle
 
     @Override
     public Map<String, String> start() {
-        member = Hazelcast.newHazelcastInstance();
+        Config config = new Config();
+        config.getNetworkConfig().getJoin().getAutoDetectionConfig().setEnabled(false);
+        member = Hazelcast.newHazelcastInstance(config);
         return Collections.emptyMap();
     }
 
