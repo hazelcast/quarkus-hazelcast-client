@@ -1,16 +1,14 @@
 package io.quarkus.hazelcast.client.runtime;
 
-import static com.hazelcast.client.HazelcastClient.newHazelcastClient;
-
-import javax.annotation.PreDestroy;
-import javax.enterprise.context.ApplicationScoped;
-import javax.enterprise.inject.Produces;
-import javax.inject.Singleton;
-
 import com.hazelcast.client.HazelcastClient;
 import com.hazelcast.core.HazelcastInstance;
-
 import io.quarkus.arc.DefaultBean;
+import jakarta.annotation.PreDestroy;
+import jakarta.enterprise.context.ApplicationScoped;
+import jakarta.enterprise.inject.Produces;
+import jakarta.inject.Singleton;
+
+import static com.hazelcast.client.HazelcastClient.newHazelcastClient;
 
 @ApplicationScoped
 public class HazelcastClientProducer {
