@@ -40,7 +40,7 @@ jobs:
       fail-fast: false
       matrix:
         java: [ '11' ]
-        graal: [ '22.2.0' ]
+        graal: [ '22.3' ]
         hazelcast: [ '5.0.2', '5.1.1', '5.2.0' ]
 
     steps:
