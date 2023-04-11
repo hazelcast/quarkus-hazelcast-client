@@ -115,6 +115,7 @@ To make testing simple, the extension provides the `HazelcastServerTestResource`
 - `1.1.1` is compatible with Quarkus 1.8.x+ and Hazelcast 4.0.x and 4.1.x and JDK 8+
 - `1.2.0` is compatible with Quarkus 1.13.x+ and Hazelcast 4.x and JDK 8+
 - `3.0.0` is compatible with Quarkus 2.x+ and Hazelcast 4.x and JDK 8+
+- `4.0.0` is compatible with Quarkus 3.x+ and Hazelcast 4.x and JDK 11+
 
 ## Limitations (native mode)
 There's no support for:
