@@ -74,6 +74,8 @@ import org.jboss.jandex.Type;
 
 import java.io.IOException;
 
+import static io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem.builder;
+
 class HazelcastClientProcessor {
 
     @BuildStep
@@ -125,7 +127,7 @@ class HazelcastClientProcessor {
 
     @BuildStep
     void registerReflectivelyCreatedClasses(BuildProducer<ReflectiveClassBuildItem> reflectiveClasses) {
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false, HazelcastClientCachingProvider.class));
+        reflectiveClasses.produce(builder(HazelcastClientCachingProvider.class).build());
     }
 
     @BuildStep
@@ -151,16 +153,14 @@ class HazelcastClientProcessor {
             BuildProducer<ReflectiveHierarchyIgnoreWarningBuildItem> ignoreWarnings) {
 
         registerTypeHierarchy(reflectiveClassHierarchies, ignoreWarnings, ConfigReplacer.class);
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false,
-                EncryptionReplacer.class,
-                PropertyReplacer.class));
+        reflectiveClasses.produce(builder(EncryptionReplacer.class, PropertyReplacer.class).build());
     }
 
     void registerServiceProviders(Class<?> klass, BuildProducer<NativeImageResourceBuildItem> resources, BuildProducer<ReflectiveClassBuildItem> reflectiveClasses, BuildProducer<GeneratedResourceBuildItem> generatedResources) throws IOException {
         String service = "META-INF/services/" + klass.getName();
 
         for (String impl : ServiceUtil.classNamesNamedIn(Thread.currentThread().getContextClassLoader(), service)) {
-            reflectiveClasses.produce(new ReflectiveClassBuildItem(false, false, impl));
+            reflectiveClasses.produce(builder(impl).build());
         }
 
         resources.produce(new NativeImageResourceBuildItem(service));
@@ -174,37 +174,36 @@ class HazelcastClientProcessor {
                 reflectiveClassHierarchies, ignoreWarnings,
                 com.hazelcast.security.ICredentialsFactory.class);
 
-        reflectiveClasses.produce(
-                new ReflectiveClassBuildItem(false, false, com.hazelcast.config.security.StaticCredentialsFactory.class));
+        reflectiveClasses.produce(builder(com.hazelcast.config.security.StaticCredentialsFactory.class).build());
     }
 
     @BuildStep
     void registerDataStructureProxies(BuildProducer<ReflectiveClassBuildItem> reflectiveClasses,
                                       BuildProducer<ReflectiveHierarchyBuildItem> reflectiveClassHierarchies,
                                       BuildProducer<ReflectiveHierarchyIgnoreWarningBuildItem> ignoreWarnings) {
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientSetProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientQueueProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientCardinalityEstimatorProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientClusterProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientDurableExecutorServiceProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientExecutorServiceProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientFlakeIdGeneratorProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientListProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientMapProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientMultiMapProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientPNCounterProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientQueueProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientReliableMessageRunner.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientReliableTopicProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientReplicatedMapProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientRingbufferProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientScheduledExecutorProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientScheduledFutureProxy.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientTopicProxy.class));
+        reflectiveClasses.produce(builder(ClientSetProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientQueueProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientCardinalityEstimatorProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientClusterProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientDurableExecutorServiceProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientExecutorServiceProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientFlakeIdGeneratorProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientListProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientMapProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientMultiMapProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientPNCounterProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientQueueProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientReliableMessageRunner.class).methods().build());
+        reflectiveClasses.produce(builder(ClientReliableTopicProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientReplicatedMapProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientRingbufferProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientScheduledExecutorProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientScheduledFutureProxy.class).methods().build());
+        reflectiveClasses.produce(builder(ClientTopicProxy.class).methods().build());
 
         // created reflectively by com.hazelcast.internal.config.ConfigUtils#getConfig
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientReliableTopicConfig.class));
-        reflectiveClasses.produce(new ReflectiveClassBuildItem(true, false, ClientFlakeIdGeneratorConfig.class));
+        reflectiveClasses.produce(builder(ClientReliableTopicConfig.class).methods().build());
+        reflectiveClasses.produce(builder(ClientFlakeIdGeneratorConfig.class).methods().build());
 
         registerTypeHierarchy(reflectiveClassHierarchies, ignoreWarnings, RuntimeException.class);
     }
@@ -217,8 +216,7 @@ class HazelcastClientProcessor {
         registerTypeHierarchy(
                 reflectiveClassHierarchies, ignoreWarnings,
                 com.hazelcast.nio.ssl.SSLContextFactory.class);
-        reflectiveClasses.produce(
-                new ReflectiveClassBuildItem(false, false, BasicSSLContextFactory.class));
+        reflectiveClasses.produce(builder(BasicSSLContextFactory.class).build());
     }
 
     @BuildStep

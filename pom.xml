@@ -17,7 +17,7 @@
 
     <groupId>com.hazelcast</groupId>
     <artifactId>quarkus-hazelcast-client-parent</artifactId>
-    <version>3.0.1-SNAPSHOT</version>
+    <version>4.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Quarkus Hazelcast Client</name>
@@ -34,22 +34,21 @@
 
     <developers>
         <developer>
-            <id>pivovarit</id>
-            <name>Grzegorz Piwowarek</name>
-            <email>gpiwowarek@gmail.com</email>
+            <id>ldziedziul</id>
+            <name>Łukasz Dziedziul</name>
+            <email>l.dziedziul+hz@gmail.com</email>
             <organization>Hazelcast</organization>
         </developer>
     </developers>
 
 
     <properties>
-        <quarkus.version>2.16.6.Final</quarkus.version>
+        <quarkus.version>3.0.0.CR2</quarkus.version>
         <hazelcast.version>5.2.3</hazelcast.version>
         <jcache.version>1.1.1</jcache.version>
         <affinity.version>3.23.3</affinity.version>
 
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.release>11</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <supported-maven-versions>[3.5.3,)</supported-maven-versions>
 
@@ -152,9 +151,9 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>${maven-surefire-plugin-version}</version>
                     <configuration>
-                        <systemProperties>
+                        <systemPropertyVariables>
                             <java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-                        </systemProperties>
+                        </systemPropertyVariables>
                     </configuration>
                 </plugin>
                 <plugin>
@@ -180,7 +179,6 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
-                    <optimize>true</optimize>
                     <debug>true</debug>
                     <showDeprecation>true</showDeprecation>
                     <showWarnings>true</showWarnings>
@@ -198,6 +196,9 @@
                                 <requireMavenVersion>
                                     <version>${supported-maven-versions}</version>
                                 </requireMavenVersion>
+                                <requireJavaVersion>
+                                    <version>[11,)</version>
+                                </requireJavaVersion>
                             </rules>
                         </configuration>
                         <goals>
