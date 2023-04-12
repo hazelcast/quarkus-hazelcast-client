@@ -31,7 +31,7 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Build on JVM
-        run: mvn -B verify
+        run: ./mvnw -B verify
 
   build-graalvm:
     needs: build-jvm
@@ -61,7 +61,7 @@ jobs:
         run: docker pull quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
 
       - name: Build against ${{ matrix.hazelcast }} on GraalVM ${{ matrix.graal }} 
-        run: mvn -B -Dhazelcast.version=${{ matrix.hazelcast }} verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
+        run: ./mvnw -B -Dhazelcast.version=${{ matrix.hazelcast }} verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
 
   build-graalvm-default:
     needs: build-jvm
@@ -86,4 +86,4 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Build on default GraalVM version
-        run: mvn -B verify -Dnative -Dquarkus.native.container-build=true
+        run: ./mvnw -B verify -Dnative -Dquarkus.native.container-build=true
