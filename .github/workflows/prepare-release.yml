@@ -31,7 +31,7 @@ jobs:
               EXTRA_ARGS=-DdevelopmentVersion=${{ github.event.inputs.next-version }}
           fi
           git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          git config user.email "<devops@hazelcast.com>"
           ./mvnw --batch-mode release:prepare -Prelease -Darguments="-DskipTests" $EXTRA_ARGS
           ./mvnw --batch-mode release:clean
         env:

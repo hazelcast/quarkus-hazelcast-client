@@ -116,11 +116,12 @@
                     <version>${maven-release-plugin-version}</version>
                     <configuration>
                         <autoVersionSubmodules>true</autoVersionSubmodules>
-                        <tagNameFormat>@{project.version}</tagNameFormat>
+                        <tagNameFormat>v@{project.version}</tagNameFormat>
                         <useReleaseProfile>false</useReleaseProfile>
                         <releaseProfiles>release</releaseProfiles>
+                        <scmCommentPrefix>Release - </scmCommentPrefix>
                         <goals>deploy</goals>
-                        <pushChanges>true</pushChanges>
+                        <pushChanges>false</pushChanges>
                     </configuration>
                 </plugin>
                 <plugin>
