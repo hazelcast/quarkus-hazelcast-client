@@ -17,7 +17,7 @@
 
     <groupId>com.hazelcast</groupId>
     <artifactId>quarkus-hazelcast-client-parent</artifactId>
-    <version>4.0.0</version>
+    <version>4.0.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Quarkus Hazelcast Client</name>
@@ -73,7 +73,7 @@
         <url>https://github.com/hazelcast/quarkus-hazelcast-client</url>
         <connection>scm:git:https://github.com/hazelcast/quarkus-hazelcast-client.git</connection>
         <developerConnection>scm:git:https://github.com/hazelcast/quarkus-hazelcast-client.git</developerConnection>
-        <tag>4.0.0</tag>
+        <tag>HEAD</tag>
     </scm>
 
     <distributionManagement>
