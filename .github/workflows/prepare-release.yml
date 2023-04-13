@@ -15,7 +15,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
         with:
-          token: ${{ secrets.GH_TOKEN }}
+          ssh-key: "${{ secrets.COMMIT_KEY }}"
       - name: Setup JDK
         uses: actions/setup-java@v3
         with:
@@ -31,7 +31,7 @@ jobs:
               EXTRA_ARGS=-DdevelopmentVersion=${{ github.event.inputs.next-version }}
           fi
           git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
+          git config user.email "<l.dziedziul@gmail.com>"
           ./mvnw --batch-mode release:prepare -Prelease -Darguments="-DskipTests" $EXTRA_ARGS
           ./mvnw --batch-mode release:clean
         env:
@@ -41,5 +41,3 @@ jobs:
         run: |
           git push
           git push --tags
-        env:
-          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
