@@ -49,5 +49,5 @@ jobs:
         uses: softprops/action-gh-release@v1
         with:
           append_body: true
-          files: '**/target/quarkus-hazelcast-client-*.jar'
+          files: '**/target/quarkus-hazelcast-client-${{ env.VERSION }}*.jar'
           name: "${{ env.VERSION }}"
