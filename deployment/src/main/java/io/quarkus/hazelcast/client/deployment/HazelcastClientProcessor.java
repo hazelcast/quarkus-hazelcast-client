@@ -69,6 +69,7 @@ import io.quarkus.deployment.util.ServiceUtil;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientBytecodeRecorder;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientConfig;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientProducer;
+import io.quarkus.utilities.OS;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.Type;
 
@@ -232,11 +233,16 @@ class HazelcastClientProcessor {
 
     @BuildStep
     void registerICMPHelper(BuildProducer<NativeImageResourceBuildItem> resources,
+            BuildProducer<RuntimeInitializedClassBuildItem> initializedClasses,
             BuildProducer<RuntimeReinitializedClassBuildItem> reinitializedClasses) {
-        resources.produce(new NativeImageResourceBuildItem(
-                "lib/linux-x86/libicmp_helper.so",
-                "lib/linux-x86_64/libicmp_helper.so"));
-        reinitializedClasses.produce(new RuntimeReinitializedClassBuildItem(ICMPHelper.class.getName()));
+        if (OS.determineOS() == OS.LINUX) {
+            resources.produce(new NativeImageResourceBuildItem(
+                    "lib/linux-x86/libicmp_helper.so",
+                    "lib/linux-x86_64/libicmp_helper.so"));
+            reinitializedClasses.produce(new RuntimeReinitializedClassBuildItem(ICMPHelper.class.getName()));
+        } else {
+            initializedClasses.produce(new RuntimeInitializedClassBuildItem(ICMPHelper.class.getName()));
+        }
     }
 
     @BuildStep
