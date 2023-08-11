@@ -1,5 +1,6 @@
 package io.quarkus.hazelcast.client.deployment;
 
+import com.fasterxml.jackson.core.JsonFactory;
 import com.hazelcast.client.cache.impl.HazelcastClientCachingProvider;
 import com.hazelcast.client.config.ClientFlakeIdGeneratorConfig;
 import com.hazelcast.client.config.ClientReliableTopicConfig;
@@ -27,7 +28,6 @@ import com.hazelcast.client.impl.spi.ClientProxyFactory;
 import com.hazelcast.client.util.RandomLB;
 import com.hazelcast.cluster.MembershipListener;
 import com.hazelcast.collection.ItemListener;
-import com.hazelcast.com.fasterxml.jackson.core.JsonFactory;
 import com.hazelcast.config.replacer.EncryptionReplacer;
 import com.hazelcast.config.replacer.PropertyReplacer;
 import com.hazelcast.config.replacer.spi.ConfigReplacer;
