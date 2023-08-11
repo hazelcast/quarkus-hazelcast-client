@@ -193,7 +193,7 @@
                         <id>enforce</id>
                         <configuration>
                             <rules>
-                                <dependencyConvergence />
+                                <dependencyConvergence/>
                                 <requireMavenVersion>
                                     <version>${supported-maven-versions}</version>
                                 </requireMavenVersion>
