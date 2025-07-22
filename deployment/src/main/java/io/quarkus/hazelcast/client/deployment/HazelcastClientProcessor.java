@@ -1,6 +1,5 @@
 package io.quarkus.hazelcast.client.deployment;
 
-import com.fasterxml.jackson.core.JsonFactory;
 import com.hazelcast.client.cache.impl.HazelcastClientCachingProvider;
 import com.hazelcast.client.config.ClientFlakeIdGeneratorConfig;
 import com.hazelcast.client.config.ClientReliableTopicConfig;
@@ -94,7 +93,6 @@ class HazelcastClientProcessor {
                                   BuildProducer<NativeImageResourceBuildItem> resources) throws IOException {
         registerServiceProviders(DiscoveryStrategyFactory.class, resources, reflectiveClasses, generatedResources);
         registerServiceProviders(ClientExtension.class, resources, reflectiveClasses, generatedResources);
-        registerServiceProviders(JsonFactory.class, resources, reflectiveClasses, generatedResources);
     }
 
     @BuildStep
@@ -104,9 +102,8 @@ class HazelcastClientProcessor {
 
     @BuildStep
     @Record(ExecutionTime.RUNTIME_INIT)
-    HazelcastClientConfiguredBuildItem resolveClientProperties(HazelcastClientBytecodeRecorder recorder,
-            HazelcastClientConfig config) {
-        recorder.configureRuntimeProperties(config);
+    HazelcastClientConfiguredBuildItem resolveClientProperties(HazelcastClientBytecodeRecorder recorder) {
+        recorder.configureRuntimeProperties();
         return new HazelcastClientConfiguredBuildItem();
     }
 
@@ -275,7 +272,7 @@ class HazelcastClientProcessor {
             DotName simpleName = DotName.createSimple(klass.getName());
 
             reflectiveHierarchyClass.produce(
-              new ReflectiveHierarchyBuildItem.Builder().type(Type.create(simpleName, Type.Kind.CLASS)).build());
+              ReflectiveHierarchyBuildItem.builder(Type.create(simpleName, Type.Kind.CLASS)).build());
 
             ignoreWarnings.produce(
               new ReflectiveHierarchyIgnoreWarningBuildItem(simpleName));

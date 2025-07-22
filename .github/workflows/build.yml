@@ -14,7 +14,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ 11 ]
+        java: [ 17 ]
 
     steps:
       - uses: actions/checkout@v4
@@ -39,8 +39,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '11' ]
-        graal: [ '22.3' ]
+        java: [ '21' ]
+        graal: [ '23.1' ]
         hazelcast: [ '5.0.4', '5.1.5', '5.2.3' ]
 
     steps:
@@ -58,10 +58,10 @@ jobs:
           java-version: ${{ matrix.java }}
 
       - name: Pull Quarkus Native Builder Image ${{ matrix.graal }}-java${{ matrix.java }}
-        run: docker pull quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
+        run: docker pull quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
 
       - name: Build against ${{ matrix.hazelcast }} on GraalVM ${{ matrix.graal }} 
-        run: ./mvnw -B -Dhazelcast.version=${{ matrix.hazelcast }} verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi-quarkus-native-image:${{ matrix.graal }}-java${{ matrix.java }}
+        run: ./mvnw -B -Dhazelcast.version=${{ matrix.hazelcast }} verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
 
   build-graalvm-default:
     needs: build-jvm
@@ -69,7 +69,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ 11 ]
+        java: [ 17 ]
 
     steps:
       - uses: actions/checkout@v4

@@ -1,49 +1,44 @@
 package io.quarkus.hazelcast.client.runtime;
 
-import io.quarkus.runtime.annotations.ConfigItem;
 import io.quarkus.runtime.annotations.ConfigPhase;
 import io.quarkus.runtime.annotations.ConfigRoot;
+import io.smallrye.config.ConfigMapping;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.OptionalInt;
 
-@ConfigRoot(name = "hazelcast-client", phase = ConfigPhase.RUN_TIME)
-public class HazelcastClientConfig {
+@ConfigMapping(prefix = "quarkus.hazelcast-client")
+@ConfigRoot(phase = ConfigPhase.RUN_TIME)
+public interface HazelcastClientConfig {
 
     /**
      * Hazelcast Cluster members
      */
-    @ConfigItem
-    public Optional<List<String>> clusterMembers;
+    Optional<List<String>> clusterMembers();
 
     /**
      * Hazelcast client labels
      */
-    @ConfigItem
-    public Optional<List<String>> labels;
+    Optional<List<String>> labels();
 
     /**
      * Hazelcast Cluster group name
      */
-    @ConfigItem
-    public Optional<String> clusterName;
+    Optional<String> clusterName();
 
     /**
      * Outbound ports
      */
-    @ConfigItem
-    public Optional<List<Integer>> outboundPorts;
+    Optional<List<Integer>> outboundPorts();
 
     /**
      * Outbound port definitions
      */
-    @ConfigItem
-    public Optional<List<String>> outboundPortDefinitions;
+    Optional<List<String>> outboundPortDefinitions();
 
     /**
      * Connection timeout
      */
-    @ConfigItem
-    public OptionalInt connectionTimeout;
+    OptionalInt connectionTimeout();
 }
