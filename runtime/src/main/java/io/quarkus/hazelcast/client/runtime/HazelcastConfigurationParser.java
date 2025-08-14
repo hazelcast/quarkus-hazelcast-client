@@ -18,43 +18,43 @@ class HazelcastConfigurationParser {
     }
 
     private void setClusterAddress(ClientConfig clientConfig, HazelcastClientConfig config) {
-        if (config.clusterMembers.isPresent()) {
-            for (String clusterMember : config.clusterMembers.get()) {
+        if (config.clusterMembers().isPresent()) {
+            for (String clusterMember : config.clusterMembers().get()) {
                 clientConfig.getNetworkConfig().addAddress(clusterMember);
             }
         }
     }
 
     private void setClusterName(ClientConfig clientConfig, HazelcastClientConfig config) {
-        config.clusterName.ifPresent(clientConfig::setClusterName);
+        config.clusterName().ifPresent(clientConfig::setClusterName);
     }
 
     private void setLabels(ClientConfig clientConfig, HazelcastClientConfig config) {
-        if (config.labels.isPresent()) {
-            for (String label : config.labels.get()) {
+        if (config.labels().isPresent()) {
+            for (String label : config.labels().get()) {
                 clientConfig.addLabel(label);
             }
         }
     }
 
     private void setConnectionTimeout(ClientConfig clientConfig, HazelcastClientConfig config) {
-        if (config.connectionTimeout.isPresent()) {
-            int timeout = config.connectionTimeout.getAsInt();
+        if (config.connectionTimeout().isPresent()) {
+            int timeout = config.connectionTimeout().getAsInt();
             clientConfig.getNetworkConfig().setConnectionTimeout(timeout);
         }
     }
 
     private void setOutboundPortDefinitions(ClientConfig clientConfig, HazelcastClientConfig config) {
-        if (config.outboundPortDefinitions.isPresent()) {
-            for (String outboundPortDefinition : config.outboundPortDefinitions.get()) {
+        if (config.outboundPortDefinitions().isPresent()) {
+            for (String outboundPortDefinition : config.outboundPortDefinitions().get()) {
                 clientConfig.getNetworkConfig().addOutboundPortDefinition(outboundPortDefinition);
             }
         }
     }
 
     private void setOutboundPorts(ClientConfig clientConfig, HazelcastClientConfig config) {
-        if (config.outboundPorts.isPresent()) {
-            for (Integer outboundPort : config.outboundPorts.get()) {
+        if (config.outboundPorts().isPresent()) {
+            for (Integer outboundPort : config.outboundPorts().get()) {
                 clientConfig.getNetworkConfig().addOutboundPort(outboundPort);
             }
         }
