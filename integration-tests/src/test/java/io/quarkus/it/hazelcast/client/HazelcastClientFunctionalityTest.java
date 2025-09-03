@@ -1,13 +1,15 @@
 package io.quarkus.it.hazelcast.client;
 
+import com.hazelcast.internal.cluster.Versions;
+import com.hazelcast.version.Version;
 import io.quarkus.test.common.QuarkusTestResource;
 import io.quarkus.test.hazelcast.HazelcastServerTestResource;
 import io.quarkus.test.junit.QuarkusTest;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import static org.hamcrest.Matchers.is;
+import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 @QuarkusTest
 @QuarkusTestResource(HazelcastServerTestResource.class)
@@ -21,11 +23,15 @@ public class HazelcastClientFunctionalityTest {
     }
 
     @Test
-    @Disabled("CP Subsystem is available only in Hazelcast Enterprise")
     public void CPSubsystemSmokeTest() {
+        assumeCPSubsystemIsOpenSource();
         RestAssured
           .when().get("/hazelcast-client/smoke-test/cp")
           .then().body(is("OK"));
+    }
+
+    private static void assumeCPSubsystemIsOpenSource() {
+        assumeTrue(Versions.CURRENT_CLUSTER_VERSION.isLessThan(Version.of("5.5")));
     }
 
     @Test
@@ -69,8 +75,9 @@ public class HazelcastClientFunctionalityTest {
     }
 
     @Test
-    @Disabled("CP Subsystem is available only in Hazelcast Enterprise")
     public void shouldIncrementAtomicLong() {
+        assumeCPSubsystemIsOpenSource();
+
         RestAssured
           .when().get("/hazelcast-client/cp/atomic-long/increment?name=foo")
           .then().body(is("1"));
