@@ -29,6 +29,7 @@ jobs:
         with:
           distribution: 'zulu'
           java-version: ${{ matrix.java }}
+          cache: 'maven'
 
       - name: Build on JVM
         run: ./mvnw -B verify
@@ -41,7 +42,7 @@ jobs:
       matrix:
         java: [ '21' ]
         graal: [ '23.1' ]
-        hazelcast: [ '5.0.4', '5.1.5', '5.2.3' ]
+        hazelcast: [ '5.0.5', '5.1.7', '5.2.5', '5.3.8', '5.4.0', '5.5.0' ]
 
     steps:
       - uses: actions/checkout@v5

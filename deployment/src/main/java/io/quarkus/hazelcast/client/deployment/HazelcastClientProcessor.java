@@ -35,6 +35,7 @@ import com.hazelcast.internal.diagnostics.EventQueuePlugin;
 import com.hazelcast.internal.diagnostics.OverloadedConnectionsPlugin;
 import com.hazelcast.internal.networking.nio.NioThread;
 import com.hazelcast.internal.util.ICMPHelper;
+import com.hazelcast.internal.util.OperatingSystemMXBeanSupport;
 import com.hazelcast.internal.util.RandomPicker;
 import com.hazelcast.internal.util.ThreadLocalRandomProvider;
 import com.hazelcast.internal.util.executor.StripedExecutor;
@@ -44,7 +45,6 @@ import com.hazelcast.nio.serialization.DataSerializable;
 import com.hazelcast.nio.serialization.DataSerializableFactory;
 import com.hazelcast.nio.serialization.PortableFactory;
 import com.hazelcast.nio.serialization.Serializer;
-import com.hazelcast.nio.ssl.BasicSSLContextFactory;
 import com.hazelcast.partition.MigrationListener;
 import com.hazelcast.query.extractor.ValueExtractor;
 import com.hazelcast.spi.discovery.DiscoveryStrategyFactory;
@@ -66,7 +66,6 @@ import io.quarkus.deployment.builditem.nativeimage.RuntimeInitializedClassBuildI
 import io.quarkus.deployment.builditem.nativeimage.RuntimeReinitializedClassBuildItem;
 import io.quarkus.deployment.util.ServiceUtil;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientBytecodeRecorder;
-import io.quarkus.hazelcast.client.runtime.HazelcastClientConfig;
 import io.quarkus.hazelcast.client.runtime.HazelcastClientProducer;
 import org.jboss.jandex.DotName;
 import org.jboss.jandex.Type;
@@ -213,7 +212,6 @@ class HazelcastClientProcessor {
         registerTypeHierarchy(
                 reflectiveClassHierarchies, ignoreWarnings,
                 com.hazelcast.nio.ssl.SSLContextFactory.class);
-        reflectiveClasses.produce(builder(BasicSSLContextFactory.class).build());
     }
 
     @BuildStep
@@ -254,6 +252,7 @@ class HazelcastClientProcessor {
         runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(StripedExecutor.class.getName()));
         runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(ThreadLocalRandomProvider.class.getName()));
         runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(RandomPicker.class.getName()));
+        runtimeInitializedClasses.produce(new RuntimeInitializedClassBuildItem(OperatingSystemMXBeanSupport.class.getName()));
     }
 
     @BuildStep
@@ -261,6 +260,9 @@ class HazelcastClientProcessor {
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.0.xsd"));
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.1.xsd"));
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.2.xsd"));
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.3.xsd"));
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.4.xsd"));
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.5.xsd"));
     }
 
     private static void registerTypeHierarchy(
