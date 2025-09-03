@@ -257,6 +257,10 @@ class HazelcastClientProcessor {
 
     @BuildStep
     void registerXMLParsingUtilities(BuildProducer<NativeImageResourceBuildItem> resources) {
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.0.xsd"));
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.1.xsd"));
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.2.xsd"));
+        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.3.xsd"));
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.4.xsd"));
         resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.5.xsd"));
     }
