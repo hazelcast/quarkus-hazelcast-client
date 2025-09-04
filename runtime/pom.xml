@@ -23,7 +23,6 @@
 
     <artifactId>quarkus-hazelcast-client</artifactId>
     <name>Quarkus Hazelcast Client</name>
-    <description>Connect to the Hazelcast IMDG for distributed caching and in-memory computing</description>
 
     <dependencyManagement>
         <dependencies>
