@@ -9,11 +9,15 @@
   "prConcurrentLimit": 100,
   "packageRules": [
     {
-      "managers": ["maven"],
+      "matchManagers": [
+        "maven"
+      ],
       "enabled": false
     },
     {
-      "managers": ["github-actions"],
+      "matchManagers": [
+        "github-actions"
+      ],
       "enabled": false
     }
   ]
