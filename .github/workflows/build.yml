@@ -28,7 +28,16 @@ jobs:
       - name: Build on JVM
         run: ./mvnw -B verify
 
-  get-hazelcast-versions:
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-jvm
+          path: |
+            **/target/**/*.log
+            **/target/**/*.txt
+
+ get-hazelcast-versions:
       runs-on: ubuntu-slim
       outputs:
           versions: ${{ steps.versions.outputs.versions }}
@@ -66,6 +75,15 @@ jobs:
       - name: Build against ${{ matrix.hazelcast }} on GraalVM ${{ matrix.graal }} 
         run: ./mvnw -B -Dhazelcast.version=${{ matrix.hazelcast }} verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
 
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ join(matrix.*, ' - ') }}
+          path: |
+            **/target/**/*.log
+            **/target/**/*.txt
+
   build-graalvm-default:
     needs: build-jvm
     runs-on: ubuntu-24.04
@@ -85,3 +103,12 @@ jobs:
 
       - name: Build on default GraalVM version
         run: ./mvnw -B verify -Dnative -Dquarkus.native.container-build=true
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-graalvm-default
+          path: |
+            **/target/**/*.log
+            **/target/**/*.txt
