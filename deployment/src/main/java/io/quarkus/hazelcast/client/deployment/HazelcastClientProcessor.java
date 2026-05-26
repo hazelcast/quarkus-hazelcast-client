@@ -59,6 +59,7 @@ import io.quarkus.deployment.builditem.FeatureBuildItem;
 import io.quarkus.deployment.builditem.GeneratedResourceBuildItem;
 import io.quarkus.deployment.builditem.HotDeploymentWatchedFileBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.NativeImageResourceBuildItem;
+import io.quarkus.deployment.builditem.nativeimage.NativeImageResourcePatternsBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveClassBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveHierarchyBuildItem;
 import io.quarkus.deployment.builditem.nativeimage.ReflectiveHierarchyIgnoreWarningBuildItem;
@@ -256,15 +257,9 @@ class HazelcastClientProcessor {
     }
 
     @BuildStep
-    void registerXMLParsingUtilities(BuildProducer<NativeImageResourceBuildItem> resources) {
-        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.0.xsd"));
-        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.1.xsd"));
-        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.2.xsd"));
-        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.3.xsd"));
-        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.4.xsd"));
-        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.5.xsd"));
-        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.6.xsd"));
-        resources.produce(new NativeImageResourceBuildItem("hazelcast-client-config-5.7.xsd"));
+    void registerXMLParsingUtilities(BuildProducer<NativeImageResourcePatternsBuildItem> resources) {
+        resources.produce(NativeImageResourcePatternsBuildItem.builder()
+                .includeGlob("hazelcast-client-config-*.xsd").build());
     }
 
     private static void registerTypeHierarchy(
