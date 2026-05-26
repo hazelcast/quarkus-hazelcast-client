@@ -37,16 +37,16 @@ jobs:
             **/target/**/*.log
             **/target/**/*.txt
   
-   get-hazelcast-versions:
-        runs-on: ubuntu-slim
-        outputs:
-            versions: ${{ steps.versions.outputs.versions }}
-        steps:
-          - id: get-maintenance-versions
-            uses: hazelcast/hazelcast/.github/actions/get-supported-maintenance-versions@master
-          - id: versions
-            run: |
-                echo "versions=$(jq --compact-output 'map(. | tostring + ".0")' <<< '${{ steps.get-maintenance-versions.outputs.versions }}')" >> ${GITHUB_OUTPUT}
+  get-hazelcast-versions:
+    runs-on: ubuntu-slim
+    outputs:
+      versions: ${{ steps.versions.outputs.versions }}
+    steps:
+      - id: get-maintenance-versions
+        uses: hazelcast/hazelcast/.github/actions/get-supported-maintenance-versions@master
+      - id: versions
+        run: |
+            echo "versions=$(jq --compact-output 'map(. | tostring + ".0")' <<< '${{ steps.get-maintenance-versions.outputs.versions }}')" >> ${GITHUB_OUTPUT}
 
   build-graalvm:
     needs:
