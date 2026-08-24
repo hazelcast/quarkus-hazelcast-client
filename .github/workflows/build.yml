@@ -57,7 +57,7 @@ jobs:
       fail-fast: false
       matrix:
         java: [ '21' ]
-        graal: [ '23.1' ]
+        graal: [ '25' ]
         hazelcast: ${{ fromJSON(needs.get-hazelcast-versions.outputs.versions) }}
 
     steps:
