@@ -30,7 +30,7 @@ jobs:
       - uses: hazelcast/maven-release-tooling/release@main
         with:
           next-snapshot-version: ${{ inputs.next-snapshot-version }}
-          release-files: '**/target/quarkus-hazelcast-client-${{ env.VERSION }}*.jar'
+          release-files: '**/target/quarkus-hazelcast-client-*.jar'
         env:
           MAVEN_ARGS: --activate-profiles release 
           MAVEN_USERNAME: ${{ secrets.SONATYPE_OSS_USERNAME }}
