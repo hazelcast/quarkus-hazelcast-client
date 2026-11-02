@@ -5,7 +5,7 @@ on:
     inputs:
       next-snapshot-version:
         required: false
-        description: 'See https://github.com/hazelcast/maven-release-tooling/blob/main/release/action.yml'
+        description: See https://github.com/hazelcast/maven-release-tooling/blob/main/release/action.yml
 
 jobs:
   release: 
