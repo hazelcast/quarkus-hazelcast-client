@@ -48,7 +48,7 @@
         <jcache.version>1.1.1</jcache.version>
         <affinity.version>3.23.3</affinity.version>
 
-        <maven.compiler.release>11</maven.compiler.release>
+        <maven.compiler.release>17</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <supported-maven-versions>[3.5.3,)</supported-maven-versions>
 
@@ -197,7 +197,7 @@
                                     <version>${supported-maven-versions}</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[11,)</version>
+                                    <version>[17,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
