@@ -53,8 +53,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '21' ]
-        graal: [ '23.1' ]
+        java: [ '25' ]
+        graal: [ '25.0' ]
         hazelcast: ${{ fromJSON(needs.get-hazelcast-versions.outputs.versions) }}
 
     steps:
