@@ -15,6 +15,9 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          # Permission to push to `master` without pull request
+          token: ${{ secrets.GH_PAT }}
 
       - uses: actions/setup-java@v6
         with:
