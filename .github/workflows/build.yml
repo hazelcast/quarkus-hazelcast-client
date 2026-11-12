@@ -53,8 +53,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        java: [ '21' ]
-        graal: [ '23.1' ]
+        java: [ '25' ]
+        graal: [ '25.0' ]
         hazelcast: ${{ fromJSON(needs.get-hazelcast-versions.outputs.versions) }}
 
     steps:
@@ -69,8 +69,12 @@ jobs:
       - name: Pull Quarkus Native Builder Image ${{ matrix.graal }}-java${{ matrix.java }}
         run: docker pull quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
 
+      # Maven 3.10 ignores `-Dhazelcast.version` when it imports the BOM, so set the version in the POM instead
+      - name: Set Hazelcast version to ${{ matrix.hazelcast }}
+        run: ./mvnw -B versions:set-property -Dproperty=hazelcast.version -DnewVersion=${{ matrix.hazelcast }} -DgenerateBackupPoms=false
+
       - name: Build against ${{ matrix.hazelcast }} on GraalVM ${{ matrix.graal }} 
-        run: ./mvnw -B -Dhazelcast.version=${{ matrix.hazelcast }} verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
+        run: ./mvnw -B verify -Dnative -Dquarkus.native.container-build=true -Dquarkus.native.builder-image=quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:${{ matrix.graal }}-java${{ matrix.java }}
 
       - name: Upload logs
         if: always()
