@@ -17,7 +17,7 @@ jobs:
       - uses: actions/checkout@v7
         with:
           # Permission to push to `master` without pull request
-          token: ${{ secrets.GH_PAT }}
+          token: ${{ secrets.GH_TOKEN }}
 
       - uses: actions/setup-java@v6
         with:
