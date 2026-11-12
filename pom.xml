@@ -77,11 +77,11 @@
 
     <distributionManagement>
         <snapshotRepository>
-            <id>central</id>
+            <id>snapshot-repository</id>
             <url>https://central.sonatype.com/repository/maven-snapshots/</url>
         </snapshotRepository>
         <repository>
-            <id>central</id>
+            <id>release-repository</id>
             <url>https://ossrh-staging-api.central.sonatype.com/service/local/staging/deploy/maven2/</url>
         </repository>
     </distributionManagement>
@@ -270,7 +270,7 @@
                         <version>1.7.0</version>
                         <extensions>true</extensions>
                         <configuration>
-                            <serverId>central</serverId>
+                            <serverId>release-repository</serverId>
                             <nexusUrl>https://ossrh-staging-api.central.sonatype.com/</nexusUrl>
                             <autoReleaseAfterClose>true</autoReleaseAfterClose>
                         </configuration>

@@ -15,13 +15,16 @@ jobs:
       contents: write
     steps:
       - uses: actions/checkout@v7
+        with:
+          # Permission to push to `master` without pull request
+          token: ${{ secrets.GH_TOKEN }}
 
       - uses: actions/setup-java@v6
         with:
           java-version: 17
           distribution: 'temurin'
           cache: 'maven'
-          server-id: central
+          server-id: release-repository
           server-username-env-var: MAVEN_USERNAME
           server-password-env-var: MAVEN_PASSWORD
           gpg-private-key: ${{ secrets.MAVEN_GPG_PRIVATE_KEY }}
