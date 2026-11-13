@@ -34,6 +34,38 @@ jobs:
             **/target/**/*.log
             **/target/**/*.txt
   
+  build-quarkus-4:
+    needs: build-jvm
+    runs-on: ubuntu-24.04
+
+    steps:
+      - uses: actions/checkout@v7
+      - name: Install JDK 21
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'zulu'
+          java-version: 21
+          cache: 'maven'
+
+      # Maven 3.10 ignores `-Dquarkus.version` inside the imported BOM, so set the version in the POM instead
+      - name: Set Quarkus version to the latest 4.x
+        run: |
+          version=$(curl --fail --silent --show-error https://repo1.maven.org/maven2/io/quarkus/quarkus-bom/maven-metadata.xml | sed -n 's:.*<version>\(4\.[^<]*\)</version>.*:\1:p' | tail -1)
+          echo "Using Quarkus ${version}"
+          ./mvnw -B versions:set-property -Dproperty=quarkus.version -DnewVersion=${version} -DgenerateBackupPoms=false
+
+      - name: Build on JVM and native
+        run: ./mvnw -B verify -Dnative -Dquarkus.native.container-build=true
+
+      - name: Upload logs
+        if: always()
+        uses: actions/upload-artifact@v7
+        with:
+          name: build-quarkus-4
+          path: |
+            **/target/**/*.log
+            **/target/**/*.txt
+
   get-hazelcast-versions:
     runs-on: ubuntu-slim
     outputs:
