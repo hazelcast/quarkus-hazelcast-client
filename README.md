@@ -124,3 +124,4 @@ There's no support for:
 - Hazelcast SPI support on OSGi
 - JCache integration
 - JMX
+- CPU thread affinity
