@@ -18,21 +18,28 @@ See the official guide [here](https://guides.hazelcast.org/hazelcast-client-quar
 
 ## Configuration
 
-After configuring `quarkus-universe BOM`:
+Import the Quarkus core and Hazelcast platform BOMs at the same version:
 
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>io.quarkus</groupId>
-                <artifactId>quarkus-universe-bom</artifactId>
-                <version>${insert.newest.quarkus.version.here}</version>
+                <groupId>io.quarkus.platform</groupId>
+                <artifactId>quarkus-bom</artifactId>
+                <version>4.0.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.quarkus.platform</groupId>
+                <artifactId>quarkus-hazelcast-client</artifactId>
+                <version>4.0.1</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
         </dependencies>
     </dependencyManagement>
 
-You can just configure the `hazelcast-client` extension by adding the following dependency:
+Add the following dependency:
 
     <dependency>
         <groupId>com.hazelcast</groupId>
@@ -111,11 +118,14 @@ To make testing simple, the extension provides the `HazelcastServerTestResource`
     
 ## Compatibility Matrix
 
+The current development branch targets Quarkus 4 and requires JDK 21 or later.
+
 - `1.0.x` is compatible with Quarkus 1.6.x-1.7.x (no longer maintained)
 - `1.1.1` is compatible with Quarkus 1.8.x+ and Hazelcast 4.0.x and 4.1.x and JDK 8+
 - `1.2.0` is compatible with Quarkus 1.13.x+ and Hazelcast 4.x and JDK 8+
 - `3.0.0` is compatible with Quarkus 2.x+ and Hazelcast 4.x and JDK 8+
-- `4.0.0` is compatible with Quarkus 3.x+ and Hazelcast 4.x and JDK 11+
+- `4.0.0` is compatible with Quarkus 3.x and Hazelcast 4.x and JDK 11+
+- `5.0.0` is compatible with Quarkus 4.x and Hazelcast 5.7+ and JDK 21+
 
 ## Limitations (native mode)
 There's no support for:

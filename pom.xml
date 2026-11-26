@@ -17,7 +17,7 @@
 
     <groupId>com.hazelcast</groupId>
     <artifactId>quarkus-hazelcast-client-parent</artifactId>
-    <version>4.1.1-SNAPSHOT</version>
+    <version>5.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>Quarkus Hazelcast Client - Parent</name>
@@ -43,12 +43,12 @@
 
 
     <properties>
-        <quarkus.version>3.38.2</quarkus.version>
+        <quarkus.version>4.0.1</quarkus.version>
         <hazelcast.version>5.7.0</hazelcast.version>
         <jcache.version>1.1.1</jcache.version>
         <affinity.version>3.23.3</affinity.version>
 
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <supported-maven-versions>[3.5.3,)</supported-maven-versions>
 
@@ -197,7 +197,7 @@
                                     <version>${supported-maven-versions}</version>
                                 </requireMavenVersion>
                                 <requireJavaVersion>
-                                    <version>[17,)</version>
+                                    <version>[21,)</version>
                                 </requireJavaVersion>
                             </rules>
                         </configuration>
