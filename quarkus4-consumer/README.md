@@ -1,6 +1,6 @@
 # Quarkus 4 consumer sample
 
-This standalone Maven application uses Quarkus 4.0.1 and consumes the
+This standalone Maven application uses Quarkus 4 and consumes the
 Hazelcast extension JARs from the local Maven repository. Quarkus discovers
 the deployment JAR through the runtime JAR's extension descriptor.
 
