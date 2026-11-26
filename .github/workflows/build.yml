@@ -47,6 +47,12 @@ jobs:
           java-version: 21
           cache: 'maven'
 
+      - name: Install extension with the default Quarkus version
+        run: ./mvnw -B -pl deployment -am install -DskipTests
+
+      - name: Run the packaged Quarkus 4 consumer
+        run: ./mvnw -B -f quarkus4-consumer/pom.xml verify
+
       # Maven 3.10 ignores `-Dquarkus.version` inside the imported BOM, so set the version in the POM instead
       - name: Set Quarkus version to the latest 4.x
         run: |
@@ -55,7 +61,7 @@ jobs:
           ./mvnw -B versions:set-property -Dproperty=quarkus.version -DnewVersion=${version} -DgenerateBackupPoms=false
 
       - name: Build on JVM and native
-        run: ./mvnw -B verify -Dnative -Dquarkus.native.container-build=true
+        run: ./mvnw -B clean verify -Dnative -Dquarkus.native.container-build=true
 
       - name: Upload logs
         if: always()
