@@ -9,7 +9,6 @@
 
     <properties>
         <quarkus.version>4.0.1</quarkus.version>
-        <hazelcast.extension.version>4.1.1-SNAPSHOT</hazelcast.extension.version>
         <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
@@ -30,7 +29,7 @@
         <dependency>
             <groupId>com.hazelcast</groupId>
             <artifactId>quarkus-hazelcast-client</artifactId>
-            <version>${hazelcast.extension.version}</version>
+            <version>4.1.1-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
