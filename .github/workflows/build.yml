@@ -79,8 +79,8 @@ jobs:
           java-version: 21
           cache: 'maven'
 
-      - name: Install extension with the default Quarkus version
-        run: ./mvnw --batch-mode --projects deployment --also-make install -DskipTests
+      - name: Install extension and test framework with the default Quarkus version
+        run: ./mvnw --batch-mode --projects deployment,test-framework --also-make install -DskipTests
 
       - name: Run the packaged Quarkus 4 consumer
         run: ./mvnw --batch-mode --projects quarkus4-consumer --activate-profiles quarkus4-consumer verify

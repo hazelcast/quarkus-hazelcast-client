@@ -8,13 +8,13 @@ deployment JAR through the runtime JAR's extension descriptor.
 With JDK 21 or newer, run these commands from the repository root:
 
 ```sh
-./mvnw -pl deployment -am install -DskipTests
+./mvnw -pl deployment,test-framework -am install -DskipTests
 ./mvnw -pl quarkus4-consumer -Pquarkus4-consumer verify
 ```
 
-The first command installs the extension using the root build's Quarkus 3
-version. If the JARs and their POMs are already installed, run only the second
-command.
+The first command installs the extension and shared test framework using the
+root build's Quarkus 3 version. If both are already installed, run only the
+second command.
 
 The integration test starts an embedded Hazelcast member on a free loopback
 port and launches the packaged application. The application uses the injected

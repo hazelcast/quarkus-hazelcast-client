@@ -50,6 +50,12 @@
                     <version>${project.version}</version>
                 </dependency>
                 <dependency>
+                    <groupId>com.hazelcast</groupId>
+                    <artifactId>quarkus-test-hazelcast</artifactId>
+                    <version>${project.version}</version>
+                    <scope>test</scope>
+                </dependency>
+                <dependency>
                     <groupId>io.quarkus</groupId>
                     <artifactId>quarkus-junit</artifactId>
                     <scope>test</scope>
