@@ -25,7 +25,7 @@ public class HazelcastConsumer implements QuarkusApplication {
             if (!value.equals(result)) {
                 throw new IllegalStateException("Expected to read back " + value + " but got " + result);
             }
-            System.out.printf("Hazelcast round trip: %s", result);
+            System.out.printf("Hazelcast round trip: %s%n", result);
             return 0;
         } finally {
             map.delete(key);

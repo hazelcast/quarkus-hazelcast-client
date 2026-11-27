@@ -1,20 +1,20 @@
 # Quarkus 4 consumer sample
 
-This standalone Maven application uses Quarkus 4 and consumes the
-Hazelcast extension JARs from the local Maven repository. Quarkus discovers
-the deployment JAR through the runtime JAR's extension descriptor.
+This child module builds a Quarkus 4 application with the `quarkus4-consumer`
+profile. It inherits the extension version from the root POM and consumes the
+extension JARs from the local Maven repository. Quarkus discovers the
+deployment JAR through the runtime JAR's extension descriptor.
 
 With JDK 21 or newer, run these commands from the repository root:
 
 ```sh
 ./mvnw -pl deployment -am install -DskipTests
-./mvnw -f quarkus4-consumer/pom.xml verify
+./mvnw -pl quarkus4-consumer -Pquarkus4-consumer verify
 ```
 
 The first command installs the extension using the root build's Quarkus 3
 version. If the JARs and their POMs are already installed, run only the second
-command. To test a different installed extension version, pass
-`-Dhazelcast.extension.version=<version>` to the second command.
+command.
 
 The integration test starts an embedded Hazelcast member on a free loopback
 port and launches the packaged application. The application uses the injected
