@@ -80,10 +80,10 @@ jobs:
           cache: 'maven'
 
       - name: Install extension with the default Quarkus version
-        run: ./mvnw --batch-mode --activate-profiles deployment --also-make install -DskipTests
+        run: ./mvnw --batch-mode --projects deployment --also-make install -DskipTests
 
       - name: Run the packaged Quarkus 4 consumer
-        run: ./mvnw --batch-mode --file quarkus4-consumer verify
+        run: ./mvnw --batch-mode --projects quarkus4-consumer --activate-profiles quarkus4-consumer verify
 
       - name: Upload logs
         if: always()
