@@ -111,6 +111,9 @@ To make testing simple, the extension provides the `HazelcastServerTestResource`
     
 ## Compatibility Matrix
 
+To verify the built extension JARs in a Quarkus 4 application, see the
+[Quarkus 4 consumer sample](quarkus4-consumer/README.md).
+
 - `1.0.x` is compatible with Quarkus 1.6.x-1.7.x (no longer maintained)
 - `1.1.1` is compatible with Quarkus 1.8.x+ and Hazelcast 4.0.x and 4.1.x and JDK 8+
 - `1.2.0` is compatible with Quarkus 1.13.x+ and Hazelcast 4.x and JDK 8+
